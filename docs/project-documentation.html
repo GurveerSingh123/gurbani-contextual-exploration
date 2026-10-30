@@ -1,0 +1,655 @@
+<title>Gurbani Semantic Retrieval</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Serif+Gurmukhi:wght@400;600&display=swap">
+
+<style>
+:root{
+  --paper:#F5F6F8;
+  --surface:#FFFFFF;
+  --sunk:#ECEEF3;
+  --ink:#17203A;
+  --ink-soft:#4A5573;
+  --ink-faint:#7C87A3;
+  --rule:#D9DDE7;
+  --rule-soft:#E7EAF1;
+  --accent:#24408A;
+  --accent-soft:#E4E9F6;
+  --gold:#A67C1A;
+  --gold-soft:#F6EFDD;
+  --good:#2E6B4F;
+  --bad:#A33A3A;
+  --shadow:rgba(23,32,58,.10);
+
+  --display:"Spectral",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --gur:"Noto Serif Gurmukhi","Nirmala UI","Raavi",serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#101320;
+    --surface:#181C2B;
+    --sunk:#1F2436;
+    --ink:#E6E9F2;
+    --ink-soft:#AEB7CE;
+    --ink-faint:#8590AB;
+    --rule:#2C3348;
+    --rule-soft:#242A3D;
+    --accent:#8AABEC;
+    --accent-soft:#1D2740;
+    --gold:#D8AC52;
+    --gold-soft:#2A2417;
+    --good:#6FBF97;
+    --bad:#E08585;
+    --shadow:rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101320;
+  --surface:#181C2B;
+  --sunk:#1F2436;
+  --ink:#E6E9F2;
+  --ink-soft:#AEB7CE;
+  --ink-faint:#8590AB;
+  --rule:#2C3348;
+  --rule-soft:#242A3D;
+  --accent:#8AABEC;
+  --accent-soft:#1D2740;
+  --gold:#D8AC52;
+  --gold-soft:#2A2417;
+  --good:#6FBF97;
+  --bad:#E08585;
+  --shadow:rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px 96px}
+.col{max-width:660px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+
+/* ---------- masthead ---------- */
+.mast{padding:64px 0 40px;border-bottom:2px solid var(--ink)}
+.eyebrow{
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:20px;
+}
+.mast h1{font-size:clamp(38px,6vw,60px);line-height:1.04;font-weight:700;letter-spacing:-.015em}
+.mast .sub{
+  font-family:var(--display);font-size:clamp(19px,2.4vw,23px);
+  font-style:italic;color:var(--ink-soft);margin-top:18px;max-width:640px;line-height:1.45;
+}
+.byline{
+  display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:32px;
+  font-size:13.5px;color:var(--ink-faint);
+}
+.byline b{color:var(--ink-soft);font-weight:500}
+
+/* ---------- status strip ---------- */
+.strip{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);
+  margin:0 0 8px;
+}
+.strip div{background:var(--surface);padding:18px 20px}
+.strip .n{
+  font-family:var(--display);font-size:27px;font-weight:600;
+  font-variant-numeric:tabular-nums;line-height:1.1;
+}
+.strip .l{font-size:12px;color:var(--ink-faint);margin-top:5px;letter-spacing:.03em}
+
+section{padding-top:56px}
+h2{font-size:clamp(25px,3.4vw,32px);font-weight:600;letter-spacing:-.01em;line-height:1.2}
+h3{font-size:19px;font-weight:600;margin-top:32px}
+section > .col > p + p,
+section > .col > h3 + p{margin-top:16px}
+.col > p{margin-top:16px}
+.col > h3 + p{margin-top:10px}
+
+/* ---------- stage headers ---------- */
+.stage{display:flex;align-items:baseline;gap:16px;margin-bottom:6px}
+.stage .num{
+  font-family:var(--display);font-size:14px;font-weight:600;
+  color:var(--surface);background:var(--ink);
+  min-width:30px;height:30px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  flex:none;transform:translateY(-2px);
+}
+.stage-note{font-size:13px;color:var(--ink-faint);margin-left:46px;letter-spacing:.02em}
+
+/* ---------- plain-terms aside ---------- */
+.plain{
+  border-left:3px solid var(--gold);background:var(--gold-soft);
+  padding:16px 20px;margin-top:22px;
+}
+.plain b{
+  display:block;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:6px;font-weight:600;
+}
+.plain p{font-size:15.5px;line-height:1.6;color:var(--ink-soft)}
+
+/* ---------- finding callout ---------- */
+.finding{
+  border:1px solid var(--rule);border-top:3px solid var(--accent);
+  background:var(--surface);padding:26px 28px;margin-top:26px;
+}
+.finding h3{margin-top:0;font-size:20px}
+.finding p{margin-top:12px;color:var(--ink-soft);font-size:16px}
+
+/* ---------- verse blocks ---------- */
+.gur{font-family:var(--gur);font-size:19px;line-height:1.9;color:var(--ink)}
+.verse{
+  background:var(--surface);border:1px solid var(--rule);
+  padding:20px 24px;margin-top:20px;
+}
+.verse .gur{font-size:20px}
+.verse .gloss{
+  font-family:var(--display);font-style:italic;font-size:15.5px;
+  color:var(--ink-soft);margin-top:6px;
+}
+.verse .meta{
+  font-size:12px;color:var(--ink-faint);letter-spacing:.04em;
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--rule-soft);
+}
+.pair{display:grid;gap:14px;margin-top:20px}
+@media(min-width:720px){.pair{grid-template-columns:1fr 1fr}}
+.pair .verse{margin-top:0}
+
+.verdict{
+  display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:3px 9px;border:1px solid currentColor;
+}
+.verdict.ok{color:var(--good)}
+.verdict.no{color:var(--bad)}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;margin-top:24px;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;background:var(--surface);font-size:15px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--rule-soft)}
+thead th{
+  background:var(--sunk);font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--ink-faint);font-weight:600;white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.lead td{background:var(--accent-soft);font-weight:600}
+td b{font-weight:600}
+.tnote{font-size:13.5px;color:var(--ink-faint);margin-top:10px}
+
+/* ---------- figures ---------- */
+figure{margin:34px 0 0}
+figure svg{display:block;width:100%;height:auto;color:var(--ink)}
+figcaption{
+  font-size:13.5px;color:var(--ink-faint);margin-top:14px;
+  padding-top:12px;border-top:1px solid var(--rule-soft);max-width:640px;
+}
+.figbox{background:var(--surface);border:1px solid var(--rule);padding:26px 24px}
+
+/* ---------- file list ---------- */
+.files{margin-top:24px;border:1px solid var(--rule);background:var(--surface)}
+.files div{
+  display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;
+  padding:12px 18px;border-bottom:1px solid var(--rule-soft);
+}
+.files div:last-child{border-bottom:none}
+.files code{
+  font-family:var(--body);font-weight:500;font-size:14.5px;color:var(--accent);
+  flex:none;
+}
+.files span{font-size:14px;color:var(--ink-soft)}
+
+ul.plainlist{margin:16px 0 0;padding-left:20px}
+ul.plainlist li{margin-top:9px;color:var(--ink-soft)}
+ul.plainlist li b{color:var(--ink);font-weight:600}
+
+.foot{
+  margin-top:72px;padding-top:24px;border-top:2px solid var(--ink);
+  font-size:13.5px;color:var(--ink-faint);
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">Major Project · Progress Documentation</div>
+  <h1>Gurbani Semantic Retrieval</h1>
+  <p class="sub">Finding verses of Sri Guru Granth Sahib that share a meaning — even when they share no words at all.</p>
+  <div class="byline">
+    <span><b>Guru Nanak Dev Engineering College</b>, Ludhiana</span>
+    <span>Balkaran Singh · Gurpreet Kaur · Gurveer Singh</span>
+    <span>Stages 1–5 complete · model training not yet begun</span>
+  </div>
+</header>
+
+<div class="strip">
+  <div><div class="n">60,360</div><div class="l">verses collected</div></div>
+  <div><div class="n">55,217</div><div class="l">usable after cleaning</div></div>
+  <div><div class="n">164,778</div><div class="l">teaching examples built</div></div>
+  <div><div class="n">919</div><div class="l">test questions</div></div>
+  <div><div class="n">0</div><div class="l">models trained yet</div></div>
+</div>
+
+<section>
+  <div class="col">
+    <h2>What the project is trying to do</h2>
+    <p>Sri Guru Granth Sahib contains roughly 60,000 lines of scripture. A reader who wants to find every verse about, say, <em>letting go of envy</em> has a problem: the same teaching appears in many places, in different words, across different musical measures and hundreds of pages apart.</p>
+    <p>Ordinary search cannot help, because ordinary search matches <em>words</em>. Type a verse about envy and you get back verses containing that verse's particular words — not verses carrying that verse's meaning.</p>
+    <p>Our system is meant to match meaning, which in Gurbani is called <b>Bhavarth</b>. Give it one Pankati (line), and it returns other Pankatis that teach the same thing, with their commentary, their Ang (page number), and their Raag.</p>
+  </div>
+
+  <div class="finding col">
+    <h3>Here is the whole problem in two lines</h3>
+    <p>These two verses appear 700 pages apart. They have <b>not a single word in common</b>. They say the same thing.</p>
+  </div>
+
+  <div class="pair">
+    <div class="verse">
+      <div class="gur">ਵਿਸਰੀ ਤਿਸੈ ਪਰਾਈ ਤਾਤਾ ॥</div>
+      <div class="gloss">"He forgets to feel envy of others."</div>
+      <div class="meta">ANG 189</div>
+    </div>
+    <div class="verse">
+      <div class="gur">ਛਾਡਿ ਵਿਡਾਣੀ ਤਾਤਿ ਮੂੜੇ ॥</div>
+      <div class="gloss">"O fool, give up your envy of others."</div>
+      <div class="meta">ANG 889</div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="plain">
+      <b>In plain terms</b>
+      <p>A keyword search will never connect these two lines, because there is nothing to match. A system that understands meaning would connect them instantly. That gap is the entire project.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The five stages, and where we are</h2>
+    <p>The work divides into five stages. All five are built and measured. The sixth — actually teaching the model Gurbani — has not started, and the reason is explained at the end.</p>
+  </div>
+
+  <figure>
+    <div class="figbox">
+      <svg viewBox="0 0 960 250" role="img" aria-label="Pipeline: 60,360 raw verses are cleaned to 55,217, paired with commentary into 164,778 examples, encoded into 54,844 vectors by BGE-M3, then searched and scored against 919 test questions.">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <g font-family="IBM Plex Sans, sans-serif">
+          <!-- boxes -->
+          <g fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="20"  y="70" width="140" height="76"/>
+            <rect x="215" y="70" width="140" height="76"/>
+            <rect x="410" y="70" width="140" height="76"/>
+            <rect x="605" y="70" width="140" height="76" stroke="#24408A" stroke-width="2.5"/>
+            <rect x="800" y="70" width="140" height="76"/>
+          </g>
+          <!-- stage numbers -->
+          <g font-size="10.5" font-weight="600" fill="currentColor" opacity=".55" text-anchor="middle" letter-spacing="1.2">
+            <text x="90"  y="60">STAGE 1</text>
+            <text x="285" y="60">STAGE 2</text>
+            <text x="480" y="60">STAGE 3</text>
+            <text x="675" y="60">STAGE 4</text>
+            <text x="870" y="60">STAGE 5</text>
+          </g>
+          <!-- box labels -->
+          <g font-size="13" font-weight="600" fill="currentColor" text-anchor="middle">
+            <text x="90"  y="101">Raw dataset</text>
+            <text x="285" y="101">Cleaned</text>
+            <text x="480" y="101">Paired with</text>
+            <text x="675" y="101" fill="#24408A">Turned into</text>
+            <text x="870" y="101">Searched</text>
+          </g>
+          <g font-size="13" fill="currentColor" text-anchor="middle" opacity=".8">
+            <text x="90"  y="118">verses</text>
+            <text x="285" y="118">scripture</text>
+            <text x="480" y="118">meanings</text>
+            <text x="675" y="118" fill="#24408A">numbers</text>
+            <text x="870" y="118">&amp; scored</text>
+          </g>
+          <g font-size="12.5" font-weight="600" fill="currentColor" text-anchor="middle" opacity=".65">
+            <text x="90"  y="138">60,360</text>
+            <text x="285" y="138">55,217</text>
+            <text x="480" y="138">164,778</text>
+            <text x="675" y="138" fill="#24408A">54,844</text>
+            <text x="870" y="138">919 tests</text>
+          </g>
+          <!-- arrows -->
+          <g stroke="currentColor" stroke-width="1.5" marker-end="url(#ar)">
+            <line x1="163" y1="108" x2="209" y2="108"/>
+            <line x1="358" y1="108" x2="404" y2="108"/>
+            <line x1="553" y1="108" x2="599" y2="108"/>
+            <line x1="748" y1="108" x2="794" y2="108"/>
+          </g>
+          <g font-size="11" fill="currentColor" text-anchor="middle" opacity=".7" font-style="italic">
+            <text x="186" y="99">clean</text>
+            <text x="381" y="99">pair</text>
+            <text x="576" y="99">encode</text>
+            <text x="771" y="99">rank</text>
+          </g>
+          <!-- model annotation -->
+          <line x1="675" y1="152" x2="675" y2="182" stroke="#24408A" stroke-width="1.5" marker-end="url(#ar)" color="#24408A"/>
+          <text x="675" y="202" font-size="12" font-weight="600" fill="#24408A" text-anchor="middle">BGE-M3 — the only model used so far</text>
+          <text x="675" y="220" font-size="11.5" fill="currentColor" opacity=".65" text-anchor="middle">used exactly as downloaded, never trained</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>The pipeline as built. Only Stage 4 involves a neural model, and that model is being used untrained — which is precisely what the final measurements are meant to expose.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="col">
+    <div class="stage"><span class="num">1</span><h2>Reading the data before touching it</h2></div>
+    <div class="stage-note">Before writing a single line of cleaning code</div>
+    <p>The dataset has one row per verse, with up to five different scholars' commentaries — called <b>Steeks</b> — attached to each. The obvious move is to start cleaning. We measured first instead, and found three things that would each have quietly damaged the project.</p>
+
+    <h3>Discovery one: two of the five commentaries are the same</h3>
+    <p>Of the rows where both were present, <b>99.9%</b> — 54,941 out of 55,017 — were character-for-character identical between the columns <code>steek_ss</code> and <code>steek_bdb</code>. It is one commentary stored twice, not two opinions.</p>
+    <div class="plain">
+      <b>Why it matters</b>
+      <p>If you teach from a duplicated textbook, that book's lessons count double. Every verse covered by that commentary would have quietly carried twice the influence of a verse covered by the others — a bias invisible in any result.</p>
+    </div>
+
+    <h3>Discovery two: one "commentary" is a dictionary</h3>
+    <p><b>49,928 of 50,015</b> entries in <code>steek_pss</code> contain an equals sign. They are word-by-word glossaries, not explanations:</p>
+    <div class="verse">
+      <div class="gur">ਰੈਣਿ = ਰਾਤ, ਜ਼ਿੰਦਗੀ-ਰੂਪ ਰਾਤ। ਪਹਿਲੈ ਪਹਰੈ = ਪਹਿਲੇ ਪਹਰ ਵਿਚ।</div>
+      <div class="gloss">A vocabulary list — "night = night, the night that is life" — not a statement of the verse's teaching.</div>
+    </div>
+    <div class="plain">
+      <b>Why it matters</b>
+      <p>Training a meaning-matcher on vocabulary lists teaches it to recognise the shape of a dictionary entry. It would have actively damaged the ability we are trying to build. We kept it for display — it is genuinely useful to a reader — but excluded it from teaching.</p>
+    </div>
+    <p>So the dataset's advertised "five commentaries per verse" is really <b>three independent ones</b>: Sahib Singh (modern Punjabi), Faridkot (older Braj), and Manmohan Singh (concise Punjabi).</p>
+
+    <h3>Discovery three: thousands of headings were being treated as scripture</h3>
+    <p>The dataset marks 720 rows as structural. The true figure is around 5,000. Lines like <span class="gur">ੴ ਸਤਿਗੁਰ ਪ੍ਰਸਾਦਿ ॥</span> (522 times), <span class="gur">ਪਉੜੀ ॥</span> (515 times) and <span class="gur">ਆਸਾ ॥</span> (39 times) are titles and section markers — the scripture's equivalent of chapter headings.</p>
+    <div class="plain">
+      <b>Why it matters</b>
+      <p>Repeated headings confuse a learning system badly. The same heading appears hundreds of times attached to hundreds of different passages, so the system receives constant contradictory instruction about what it means.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <div class="stage"><span class="num">2</span><h2>Cleaning, without deleting anything</h2></div>
+    <div class="stage-note">Every exclusion recorded and reviewable</div>
+    <p>We wrote two detectors for headings: one for lines starting with known title words, one that checks whether <em>every</em> word in a short line is a Raag name or a musical term — the Raag list being built from the project's own metadata file.</p>
+    <p>Both had bugs, and both were caught by testing rather than by reading the code:</p>
+    <ul class="plainlist">
+      <li><b>Punjabi vowel marks broke the word-boundary rules.</b> In Gurmukhi, vowel signs are separate marks attached to letters, and the programming tool we used does not count them as part of a word. Several heading types were slipping through as a result.</li>
+      <li><b>The rules were deleting real scripture.</b> The Mool Mantar — the opening of the entire Granth — was being removed as a heading, along with 14 genuine verses that happened to begin with words like <span class="gur">ਘਰੁ</span> or <span class="gur">ਰਾਗੁ</span>.</li>
+    </ul>
+    <p>The fix for the second was a rule we called the <b>scripture guard</b>: if a line is substantial and all three scholars wrote an explanation of it, it is scripture — whatever word it begins with. Scholars do not write commentary on chapter headings.</p>
+    <div class="plain">
+      <b>The check that confirmed it</b>
+      <p>Of the 202 headings the vocabulary rule newly caught, <b>194 had only one commentary</b> attached — and that one was the mechanical kind ("Sarang, Fourth Master, Dupada"). Genuine verses have three real explanations. The evidence agreed with the rule.</p>
+    </div>
+    <p>Nothing was deleted. <b>5,077 lines</b> were flagged and written to a separate review file; <b>55,217</b> remained as usable scripture.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <div class="stage"><span class="num">3</span><h2>Building the teaching material</h2></div>
+    <div class="stage-note">164,778 examples, and one trap avoided</div>
+    <p>Here is the central idea of the whole project, and it is worth understanding properly.</p>
+    <p>We have no data that says "verse A and verse B mean the same thing." Nobody has ever written that list. But we <em>do</em> have, for every verse, a scholar's explanation of what it means in plain modern Punjabi.</p>
+    <p>So we pair each verse with its explanations. The system learns to associate a verse with its meaning. And then something useful follows on its own: if verse A and verse B mean the same thing, their explanations will look alike, so both verses get pulled toward the same place — and toward each other.</p>
+  </div>
+
+  <figure>
+    <div class="figbox">
+      <svg viewBox="0 0 900 372" role="img" aria-label="Two verses sharing no words each have a commentary; the two commentaries share three words, which reveals that the verses mean the same thing.">
+        <defs>
+          <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <g font-family="IBM Plex Sans, sans-serif">
+          <!-- verse row -->
+          <rect x="30"  y="30" width="330" height="62" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="540" y="30" width="330" height="62" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="45" y="52" font-size="10.5" font-weight="600" fill="currentColor" opacity=".55" letter-spacing="1.1">VERSE · ANG 189</text>
+          <text x="555" y="52" font-size="10.5" font-weight="600" fill="currentColor" opacity=".55" letter-spacing="1.1">VERSE · ANG 889</text>
+          <text x="45" y="78" font-size="17" fill="currentColor" font-family="Noto Serif Gurmukhi, serif">ਵਿਸਰੀ ਤਿਸੈ ਪਰਾਈ ਤਾਤਾ ॥</text>
+          <text x="555" y="78" font-size="17" fill="currentColor" font-family="Noto Serif Gurmukhi, serif">ਛਾਡਿ ਵਿਡਾਣੀ ਤਾਤਿ ਮੂੜੇ ॥</text>
+
+          <!-- no-link between verses -->
+          <line x1="368" y1="61" x2="532" y2="61" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 5" opacity=".45"/>
+          <g stroke="#A33A3A" stroke-width="2">
+            <line x1="443" y1="54" x2="457" y2="68"/>
+            <line x1="457" y1="54" x2="443" y2="68"/>
+          </g>
+          <text x="450" y="88" font-size="11.5" font-weight="600" fill="#A33A3A" text-anchor="middle">0 words shared</text>
+
+          <!-- down arrows -->
+          <line x1="195" y1="96" x2="195" y2="146" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+          <line x1="705" y1="96" x2="705" y2="146" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+          <text x="205" y="126" font-size="11.5" fill="currentColor" opacity=".7" font-style="italic">explained by</text>
+          <text x="715" y="126" font-size="11.5" fill="currentColor" opacity=".7" font-style="italic">explained by</text>
+
+          <!-- steek row -->
+          <rect x="30"  y="152" width="330" height="80" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".7"/>
+          <rect x="540" y="152" width="330" height="80" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".7"/>
+          <text x="45" y="174" font-size="10.5" font-weight="600" fill="currentColor" opacity=".55" letter-spacing="1.1">COMMENTARY</text>
+          <text x="555" y="174" font-size="10.5" font-weight="600" fill="currentColor" opacity=".55" letter-spacing="1.1">COMMENTARY</text>
+          <text x="45" y="199" font-size="14" fill="currentColor" font-family="Noto Serif Gurmukhi, serif">ਉਸ ਨੂੰ ਹੋਰਨਾਂ <tspan fill="#24408A" font-weight="600">ਨਾਲ ਈਰਖਾ</tspan></text>
+          <text x="45" y="221" font-size="14" fill="currentColor" font-family="Noto Serif Gurmukhi, serif"><tspan fill="#24408A" font-weight="600">ਕਰਨੀ</tspan> ਭੁੱਲ ਜਾਂਦੀ ਹੈ ।</text>
+          <text x="555" y="199" font-size="14" fill="currentColor" font-family="Noto Serif Gurmukhi, serif">ਹੇ ਮੂਰਖ! ਦੂਜਿਆਂ <tspan fill="#24408A" font-weight="600">ਨਾਲ</tspan></text>
+          <text x="555" y="221" font-size="14" fill="currentColor" font-family="Noto Serif Gurmukhi, serif"><tspan fill="#24408A" font-weight="600">ਈਰਖਾ ਕਰਨੀ</tspan> ਛੱਡ ਦੇ ।</text>
+
+          <!-- link between steeks -->
+          <line x1="368" y1="192" x2="532" y2="192" stroke="#24408A" stroke-width="2"/>
+          <text x="450" y="184" font-size="11.5" font-weight="600" fill="#24408A" text-anchor="middle">3 words shared</text>
+          <text x="450" y="212" font-size="13" fill="#24408A" text-anchor="middle" font-family="Noto Serif Gurmukhi, serif">ਈਰਖਾ · ਕਰਨੀ · ਨਾਲ</text>
+
+          <!-- conclusion -->
+          <line x1="450" y1="238" x2="450" y2="278" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+          <rect x="255" y="286" width="390" height="56" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="450" y="311" font-size="14" font-weight="600" fill="currentColor" text-anchor="middle">The two verses teach the same thing</text>
+          <text x="450" y="330" font-size="11.5" fill="currentColor" opacity=".65" text-anchor="middle">provable by counting words — in the commentary, not the verse</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>The insight the project rests on: matching meaning is hard on the verses and easy on the commentaries. Scholars did the interpretive work by hand decades ago; we are reading their conclusions back out by counting shared words.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h3>The trap: an exam you have already seen</h3>
+    <p>Any learning system must be tested on material it has not been taught. The obvious method — shuffle everything, teach with 80%, test with 20% — fails badly here.</p>
+    <p>Lines of a single Shabad are near-repetitions of one another. Shuffle randomly and line 3 goes into the teaching set while line 4 goes into the exam. The system then appears to understand line 4 when in fact it memorised line 3.</p>
+    <p>So we grouped instead. Verses stay together if they belong to the same Shabad, if they are the same verse repeated elsewhere (the Mool Mantar appears 29 times), or if they share an identical commentary. Whole groups go to teaching or to testing, never split.</p>
+    <div class="plain">
+      <b>We checked rather than assumed — and the first attempt leaked</b>
+      <p>Twenty-nine commentaries had slipped across the boundary. Small, but it created impossible exam questions: the system taught that a commentary meant verse A, then marked wrong for not answering verse B. Adding a third grouping rule closed it. All twelve overlap checks now return zero.</p>
+    </div>
+    <p>Final result: <b>131,806</b> teaching examples, <b>16,457</b> for checking during training, <b>16,515</b> held back for the final exam — and evenly balanced across all three scholars, so no single voice dominates.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <div class="stage"><span class="num">4</span><h2>Turning verses into numbers</h2></div>
+    <div class="stage-note">The one stage that uses a neural model</div>
+    <p>A computer cannot compare meanings directly. What it can do is turn each verse into a long list of numbers — <b>1,024</b> of them — positioned so that verses with similar meanings end up with similar lists. These lists are called <b>embeddings</b>.</p>
+    <div class="plain">
+      <b>In plain terms</b>
+      <p>Picture every verse as a pin on an enormous map. The map is arranged so that verses about envy land in one region and verses about fear land in another. Finding related verses is then just looking at which pins are nearby. The 1,024 numbers are a verse's coordinates on that map.</p>
+    </div>
+    <p>The model that produces those coordinates is <b>BGE-M3</b>, published by the Beijing Academy of Artificial Intelligence. It was chosen because it handles over 100 languages including Punjabi, was built specifically for search rather than chat, and is freely available.</p>
+    <p>Placing all 54,844 verses on the map took <b>112 minutes</b> on the project laptop. It is done once and saved.</p>
+  </div>
+
+  <h3 class="col">Every model used so far</h3>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>Model</th><th>What it is</th><th>What we used it for</th><th>Trained by us?</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>BGE-M3</b></td>
+          <td>Neural model, 568 million internal settings, multilingual</td>
+          <td>Turning all 54,844 verses into map coordinates</td>
+          <td><b>No</b> — used exactly as downloaded</td>
+        </tr>
+        <tr>
+          <td><b>BM25</b> (word)</td>
+          <td>Classic keyword ranking. No AI — counts shared words</td>
+          <td>A yardstick: what ordinary search achieves</td>
+          <td>Not applicable</td>
+        </tr>
+        <tr>
+          <td><b>BM25</b> (letter groups)</td>
+          <td>The same, matching 3–5 letter fragments</td>
+          <td>A tougher yardstick — survives spelling differences</td>
+          <td>Not applicable</td>
+        </tr>
+        <tr>
+          <td><b>TF-IDF</b></td>
+          <td>Word-frequency statistics. Again no AI</td>
+          <td>Building the exam by comparing commentaries</td>
+          <td>Not applicable</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote col">Only one neural model has been involved, and it has not been taught anything about Gurbani. The others are statistical baselines used to establish what must be beaten.</p>
+</section>
+
+<section>
+  <div class="col">
+    <div class="stage"><span class="num">5</span><h2>Building an exam nobody had written</h2></div>
+    <div class="stage-note">919 questions, mined from scholarship</div>
+    <p>To prove the system improves, we must be able to mark its answers. But no list exists of which verses mean the same thing. So we built one from the commentaries.</p>
+    <p>The rule: two verses are a matching pair only when <b>two independent scholars</b> — Sahib Singh and Manmohan Singh, different centuries, different styles — both explain them in similar words. One scholar alone is not enough.</p>
+    <div class="plain">
+      <b>Why two scholars, not one</b>
+      <p>Because one scholar's habits produce false matches. Both write <span class="gur">ਕਬੀਰ ਆਖਦਾ ਹੈ</span> ("Kabir says") whenever a verse opens that way — so two unrelated verses looked identical, purely because of a shared turn of phrase. We stripped those speech formulas out; the false pair's score collapsed from 0.53 to 0.00, and genuine pairs were untouched.</p>
+    </div>
+    <p>We also required the answers to come from a <b>different Shabad</b>, because showing someone the next line of the passage they are already reading is not a discovery.</p>
+  </div>
+
+  <div class="scroll" style="max-width:660px">
+    <table>
+      <tbody>
+        <tr><td>Exam questions</td><td class="num"><b>919</b></td></tr>
+        <tr><td>Correct answers recorded</td><td class="num"><b>1,874</b></td></tr>
+        <tr><td>Answer pairs sharing no words at all</td><td class="num"><b>36.2%</b></td></tr>
+        <tr><td>Answers in a different Raag</td><td class="num"><b>87.8%</b></td></tr>
+        <tr><td>Average distance between question and answer</td><td class="num"><b>395 Angs</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote col">Two honest limitations we record openly: the exam is derived from commentaries, and it can only find pairs whose commentaries share vocabulary — so it certainly <em>misses</em> valid answers. Every score below is therefore a floor, not a ceiling. Because every method is marked against the identical exam, comparisons between them remain fair.</p>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Did we train anything? No — and that was deliberate</h2>
+    <p>This is the question that matters most, so it is worth stating without hedging: <b>no model has been trained on Gurbani yet.</b> Everything measured so far uses BGE-M3 exactly as its authors released it.</p>
+    <p>That is intentional. To claim that teaching the model Gurbani improved it, you must know how it performed <em>before</em>. Measure only after training and the number stands alone — perhaps the model was always that good. The comparison is the result, so the "before" must be recorded first.</p>
+  </div>
+
+  <h3 class="col">The before measurement</h3>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th class="num">Found in top 10</th>
+          <th class="num">Found in top 50</th>
+          <th class="num">Ranking quality</th>
+          <th class="num">On the hardest 420</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="lead"><td>BM25 — letter groups</td><td class="num">27.09%</td><td class="num">44.07%</td><td class="num">15.01</td><td class="num">1.19%</td></tr>
+        <tr><td>BM25 — whole words</td><td class="num">23.18%</td><td class="num">37.76%</td><td class="num">13.92</td><td class="num">0.00%</td></tr>
+        <tr><td>BGE-M3, untrained</td><td class="num">19.37%</td><td class="num">30.25%</td><td class="num">11.51</td><td class="num">1.43%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote col">"Found in top 10" = the share of the 919 questions where a correct verse appeared in the first ten results. The hardest 420 are questions whose correct answer shares no words with the question.</p>
+
+  <div class="finding col">
+    <h3>The finding: a leading AI model loses to keyword search</h3>
+    <p>BGE-M3 scored <b>19.37%</b>. Plain letter-matching scored <b>27.09%</b>. One of the strongest multilingual search models available is <em>worse than counting letters</em> on this task.</p>
+    <p>On the 420 hardest questions, every method is under 1.5%. Nothing currently works.</p>
+  </div>
+
+  <div class="col">
+    <p>Examining its successes explains why. Of 919 questions, the untrained model makes a genuine leap of meaning — correct answer near the top, sharing no words with the question — exactly <b>four times</b>. Its other successes are near-identical verses with spelling differences, like <span class="gur">ਅਸਤਿ ਏਕ ਦਿਗਰਿ ਕੁਈ</span> matched to <span class="gur">ਅਸਤਿ ਏਕੁ ਦਿਗਰ ਕੁਈ</span>.</p>
+    <p>It is recognising shapes of words, not meanings. The clearest demonstration came from a live search:</p>
+  </div>
+
+  <div class="verse col">
+    <div class="meta" style="margin-top:0;padding-top:0;border:none;border-bottom:1px solid var(--rule-soft);padding-bottom:10px;margin-bottom:14px">SEARCHED FOR</div>
+    <div class="gur">ਢਾਢੀ ਗੁਣ ਗਾਵੈ ਨਿਤ ਜਨਮੁ ਸਵਾਰਿਆ ॥</div>
+    <div class="gloss">"The bard sings His praises always — his life is redeemed."</div>
+  </div>
+  <div class="verse col">
+    <div class="meta" style="margin-top:0;padding-top:0;border:none;border-bottom:1px solid var(--rule-soft);padding-bottom:10px;margin-bottom:14px">RETURNED AS A CLOSE MATCH &nbsp; <span class="verdict no">Opposite meaning</span></div>
+    <div class="gur">ਧ੍ਰਿਗੁ ਜੀਵਣੁ ਬਿਰਥਾ ਜਨਮੁ ਗਵਾਇਆ ॥</div>
+    <div class="gloss">"His life is accursed — he has wasted it in vain."</div>
+  </div>
+
+  <div class="col">
+    <div class="plain">
+      <b>What went wrong</b>
+      <p>One verse says a life was <em>redeemed</em>; the other says a life was <em>wasted</em>. They are opposites. The model ranked them together because both contain <span class="gur">ਜਨਮੁ</span> ("life") and because <span class="gur">ਸਵਾਰਿਆ</span> and <span class="gur">ਗਵਾਇਆ</span> look alike. It has never been taught what these words mean in Gurbani.</p>
+    </div>
+    <p>This failure is not a setback — it is the justification. The project's premise, that existing tools cannot retrieve Gurbani by meaning, is now supported by measurement rather than assertion.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What exists right now</h2>
+    <p>Six programs, each doing one stage, all configurable from a single settings file, none of which ever modifies the original dataset.</p>
+  </div>
+  <div class="files">
+    <div><code>clean_dataset.py</code><span>Profiles and cleans; flags headings for review</span></div>
+    <div><code>create_training_pairs.py</code><span>Builds the 164,778 examples and the leak-proof split</span></div>
+    <div><code>build_eval_sets.py</code><span>Mines the 919-question exam from two scholars' agreement</span></div>
+    <div><code>build_index.py</code><span>Converts verses to coordinates; resumes if interrupted</span></div>
+    <div><code>evaluate.py</code><span>Marks every method against the same exam</span></div>
+    <div><code>semantic_search.py</code><span>The working search — verse in, related verses out</span></div>
+  </div>
+  <p class="tnote col">Alongside them sit four report files recording every number quoted on this page, so any claim here can be traced back to the run that produced it.</p>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What happens next</h2>
+    <p>The remaining work is teaching BGE-M3 the Gurbani material we prepared. This requires a graphics card: the model has 568 million internal settings, and adjusting them on the project laptop would take weeks. An RTX 3060 is available and the training program is written and checked.</p>
+    <ul class="plainlist">
+      <li><b>Train on the 131,806 examples</b> — one to three hours on the graphics card.</li>
+      <li><b>Re-place all verses on the map</b> using the newly taught model — minutes.</li>
+      <li><b>Re-sit the identical exam.</b> The results table gains a fourth row; the difference between it and the third row is the project's result.</li>
+      <li><b>Then improve further</b> — show the model its own mistakes and retrain, add a second-pass ranker, and finally have a language model write the explanation a reader sees.</li>
+    </ul>
+    <p>Two numbers must be beaten: <b>27.09%</b> overall, and <b>1.43%</b> on the hardest questions. Both were measured, on this exam, on this laptop — and both are written down.</p>
+  </div>
+</section>
+
+<div class="foot">
+  Progress documentation · Stages 1–5 complete · Model training pending GPU access<br>
+  All figures produced by the pipeline described above and reproducible from the report files in <code>data/processed/</code>.
+</div>
+
+</div>

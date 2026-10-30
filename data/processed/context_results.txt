@@ -1,0 +1,18 @@
+============================================================================================
+CONTEXT EXPERIMENT on dense:verse_hn  (same-Shabad hits excluded)
+============================================================================================
+queries: 827    v' = line + a*pada_mean + b*Shabad_mean, re-normalised
+
+variant                             H@1    H@5   H@10   H@50    MRR  nDCG10  zero@10  no-word
+---------------------------------------------------------------------------------------------
+line only (current)               18.02  33.74  41.23  58.77  25.61   22.30    5.53%    16.1%
+line + 0.5 pada                   17.65  32.65  40.39  57.32  24.89   21.52    5.07%    16.3%
+line + 1.0 pada                   16.93  31.20  38.57  54.90  23.75   20.21    5.07%    18.7%
+pada only                          1.57   5.20   6.77  13.06   3.47    3.21    0.92%    75.1%
+line + 0.5 Shabad                 18.14  33.37  41.23  57.32  25.23   22.14    5.07%    16.2%
+line + 0.5 pada + 0.25 Shabad     18.26  33.01  40.63  57.19  25.17   21.69    5.99%    16.6%
+Shabad only                        0.60   2.42   3.26   4.96   1.43    1.42    0.00%    85.9%
+
+zero@10 : H@10 on the 217 queries whose gold includes a zero-word-overlap verse
+no-word : share of the top-10 results that share NO word with the query (higher = less keyword-driven)
+============================================================================================

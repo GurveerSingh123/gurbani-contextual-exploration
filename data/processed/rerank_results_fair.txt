@@ -1,0 +1,24 @@
+==============================================================================
+RERANKING THE TOP 20 OF dense:verse_hn  (same-Shabad hits excluded)
+==============================================================================
+queries: 200 (fixed sample, seed 42)    reranker: BAAI/bge-reranker-v2-m3
+
+system                     H@1     H@5    H@10    H@50     MRR  nDCG@10
+-----------------------------------------------------------------------
+dense: verse_hn          15.00   34.00   40.50   58.50   23.57    19.41
+rerank: pankati          15.50   27.00   36.50   58.50   21.84    17.96
+rerank+fuse: pankati     15.50   31.00   40.50   58.50   23.17    19.62
+rerank: ft               10.50   30.00   37.50   58.50   19.23    16.79
+rerank+fuse: ft          16.50   31.50   42.00   58.50   23.69    20.06
+
+pankati / ft : fair on this gold set.
+ss           : OPTIMISTIC -- the gold set was mined from SS and MS commentary similarity.
+
+-- zero-word-overlap subset -----------------------------------------------
+queries whose gold includes a ZERO-word-overlap verse: 58
+  dense: verse_hn        hit@10 on those:   3.45%
+  rerank: pankati        hit@10 on those:   1.72%
+  rerank+fuse: pankati   hit@10 on those:   3.45%
+  rerank: ft             hit@10 on those:   5.17%
+  rerank+fuse: ft        hit@10 on those:   3.45%
+==============================================================================

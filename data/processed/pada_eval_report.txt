@@ -1,0 +1,17 @@
+==============================================================
+PADA EVALUATION SET  (pada -> pada)
+==============================================================
+Gold rule   : min(ss_sim, ms_sim) of combined pada Steeks in [0.15, 0.97]
+Constraint  : cross-Shabad only; identical pada text excluded
+Query split : test
+
+Query padas offered : 1,854
+Queries with gold   : 502 (27.1%)
+Total gold pairs    : 999
+Gold per query      : mean 1.99  median 1  max 10
+
+gold pairs with ZERO shared words : 75 (7.5%)
+mean word overlap (Jaccard)       : 0.134
+Ang distance   : mean 332  median 251
+different Raag : 822 of 999 (82.3%)
+==============================================================

@@ -1,0 +1,741 @@
+<title>Gurbani Retrieval Folder Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Gurmukhi:wght@400;500&display=swap">
+<style>
+/* Layout: reference manual. Sticky folder index on the left (top strip on phones), entries grouped by folder on the right. Ink-blue on paper, kesri for the one accent; same family as the project's slides and web app. */
+:root{
+  --bg:#f6f7fa; --sheet:#ffffff; --ink:#17213d; --ink2:#525d79; --rule:#dce1eb;
+  --kesri:#c46e1c; --kesri-soft:#fbeedd;
+  --c-setting:#3f5fa8; --c-setting-bg:#e6ecf8;
+  --c-script:#2f7a4b; --c-script-bg:#e3f1e7;
+  --c-data:#7a5a12; --c-data-bg:#f6eed8;
+  --c-model:#7b3f9e; --c-model-bg:#f0e6f6;
+  --c-report:#46566f; --c-report-bg:#e9edf3;
+  --warn:#b4532a; --warn-bg:#f8e6dd;
+  --f-display:"Literata",Georgia,serif;
+  --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",Consolas,monospace;
+  --f-gur:"Noto Sans Gurmukhi","Nirmala UI","Raavi",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10141e; --sheet:#171d2b; --ink:#e6eaf4; --ink2:#a6b0c8; --rule:#2a3246;
+    --kesri:#f0a35a; --kesri-soft:#3a2a19;
+    --c-setting:#9db6ee; --c-setting-bg:#1e2a45;
+    --c-script:#86d1a2; --c-script-bg:#1b3125;
+    --c-data:#e3c272; --c-data-bg:#352c16;
+    --c-model:#d2a7ea; --c-model-bg:#2f2139;
+    --c-report:#b9c4d6; --c-report-bg:#252d3c;
+    --warn:#f29a76; --warn-bg:#3c2219; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10141e; --sheet:#171d2b; --ink:#e6eaf4; --ink2:#a6b0c8; --rule:#2a3246;
+  --kesri:#f0a35a; --kesri-soft:#3a2a19;
+  --c-setting:#9db6ee; --c-setting-bg:#1e2a45;
+  --c-script:#86d1a2; --c-script-bg:#1b3125;
+  --c-data:#e3c272; --c-data-bg:#352c16;
+  --c-model:#d2a7ea; --c-model-bg:#2f2139;
+  --c-report:#b9c4d6; --c-report-bg:#252d3c;
+  --warn:#f29a76; --warn-bg:#3c2219; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.page{max-width:1180px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:230px minmax(0,1fr);gap:48px}
+nav.index{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;max-height:calc(100vh - 48px);overflow:auto;font-size:14px}
+nav.index h2{font:600 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 12px}
+nav.index a{display:block;color:var(--ink);text-decoration:none;padding:5px 10px;border-radius:5px;font-family:var(--f-mono);font-size:13.5px}
+nav.index a:hover{background:var(--sheet)}
+nav.index a.sec{font-family:var(--f-body);font-size:14px;font-weight:500}
+nav.index .gap{height:10px}
+main{min-width:0}
+.eyebrow{font:600 12.5px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--kesri)}
+h1{font-family:var(--f-display);font-size:40px;line-height:1.15;margin:10px 0 14px;text-wrap:balance;letter-spacing:-.01em}
+h2.part{font-family:var(--f-display);font-size:27px;line-height:1.25;margin:0 0 6px;text-wrap:balance}
+h3{font-size:18px;margin:0}
+p{margin:0}
+.lede{font-size:18px;color:var(--ink2);max-width:62ch}
+.lede + .lede{margin-top:12px}
+section.block{margin-top:56px;scroll-margin-top:24px}
+.intro-note{font-size:15px;color:var(--ink2);max-width:66ch;margin-top:6px}
+.g{font-family:var(--f-gur)}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+p code,li code,dd code{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:0 4px}
+
+/* start here */
+.start{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:20px}
+.start a{display:flex;flex-direction:column;gap:4px;background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;text-decoration:none;color:var(--ink)}
+.start a:hover{border-color:var(--kesri)}
+.start .n{font:600 12px/1 var(--f-body);color:var(--kesri);letter-spacing:.08em}
+.start .p{font-family:var(--f-mono);font-size:14.5px;font-weight:500}
+.start .d{font-size:14px;color:var(--ink2);line-height:1.5}
+
+/* tree */
+.tree{margin-top:20px;background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:18px 20px;overflow-x:auto}
+.tree pre{margin:0;font-family:var(--f-mono);font-size:13.5px;line-height:1.75;color:var(--ink)}
+.tree .c{color:var(--ink2)}
+.tree a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--ink2)}
+.tree a:hover{color:var(--kesri);border-color:var(--kesri)}
+
+/* flow */
+ol.flow{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:0;counter-reset:step}
+ol.flow li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 14px;padding:14px 0;border-top:1px solid var(--rule);counter-increment:step}
+ol.flow li:last-child{border-bottom:1px solid var(--rule)}
+ol.flow li::before{content:counter(step);grid-row:span 2;font:700 22px/1 var(--f-display);color:var(--kesri);padding-top:3px}
+ol.flow .what{font-weight:600}
+ol.flow .how{font-size:14.5px;color:var(--ink2)}
+ol.flow .how code{font-size:13px}
+
+/* legend + filter */
+.tools{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:20px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding-block:12px;z-index:2;border-bottom:1px solid var(--rule)}
+.tools input{flex:1 1 260px;min-width:0;font:15px var(--f-body);padding:9px 12px;border:1.5px solid var(--rule);border-radius:7px;background:var(--sheet);color:var(--ink)}
+.tools input:focus{outline:none;border-color:var(--kesri)}
+.legend{display:flex;flex-wrap:wrap;gap:6px}
+.count{font-size:13px;color:var(--ink2);min-width:9ch}
+
+.badge{display:inline-block;font:600 11px/1 var(--f-body);letter-spacing:.07em;text-transform:uppercase;padding:4px 7px;border-radius:4px;white-space:nowrap}
+.k-setting{color:var(--c-setting);background:var(--c-setting-bg)}
+.k-script{color:var(--c-script);background:var(--c-script-bg)}
+.k-data{color:var(--c-data);background:var(--c-data-bg)}
+.k-model{color:var(--c-model);background:var(--c-model-bg)}
+.k-report{color:var(--c-report);background:var(--c-report-bg)}
+.f-warn{color:var(--warn);background:var(--warn-bg)}
+.f-kesri{color:var(--kesri);background:var(--kesri-soft)}
+
+/* entries */
+.folder{margin-top:44px;scroll-margin-top:84px}
+.folder > header{display:flex;flex-direction:column;gap:6px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.folder > header .path{font-family:var(--f-mono);font-size:21px;font-weight:500}
+.folder > header p{color:var(--ink2);max-width:70ch}
+.entry{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:6px 28px;padding:16px 0;border-bottom:1px solid var(--rule);scroll-margin-top:84px}
+.entry .name{display:flex;flex-direction:column;gap:7px;min-width:0}
+.entry .name code{font-family:var(--f-mono);font-size:14.5px;font-weight:500;word-break:break-word;background:none;border:0;padding:0}
+.entry .name .tags{display:flex;flex-wrap:wrap;gap:5px}
+.entry .size{font-size:12.5px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.entry .body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.entry .body p{max-width:68ch}
+.entry dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;font-size:14px;color:var(--ink2)}
+.entry dt{font-weight:600;color:var(--ink2)}
+.entry dd{margin:0}
+.entry ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:3px;font-size:15px}
+.empty{margin-top:24px;color:var(--ink2)}
+
+/* callouts */
+.rules{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.rule{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;font-size:15px}
+.rule b{display:block;margin-bottom:3px}
+table.gloss{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px}
+table.gloss td{border-bottom:1px solid var(--rule);padding:9px 12px 9px 0;vertical-align:top}
+table.gloss td:first-child{font-weight:600;white-space:nowrap;width:1%}
+.tablewrap{overflow-x:auto}
+footer{margin-top:64px;font-size:13.5px;color:var(--ink2)}
+
+a{color:var(--kesri)}
+a:focus-visible,input:focus-visible{outline:2px solid var(--kesri);outline-offset:2px}
+
+@media (max-width:900px){
+  .page{grid-template-columns:minmax(0,1fr);gap:24px}
+  nav.index{position:static;max-height:none;display:flex;flex-wrap:wrap;gap:4px}
+  nav.index h2{width:100%}
+  nav.index .gap{display:none}
+  nav.index a{background:var(--sheet);border:1px solid var(--rule)}
+  .entry{grid-template-columns:minmax(0,1fr)}
+  h1{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="page">
+<nav class="index" aria-label="Contents">
+  <h2>Contents</h2>
+  <a class="sec" href="#start">Start here</a>
+  <a class="sec" href="#tree">The folder at a glance</a>
+  <a class="sec" href="#flow">How the pieces connect</a>
+  <a class="sec" href="#rules">Rules worth knowing</a>
+  <a class="sec" href="#glossary">Words used here</a>
+  <div class="gap"></div>
+  <h2>Every file</h2>
+  <a href="#d-root">project root</a>
+  <a href="#d-claude">.claude/</a>
+  <a href="#d-venv">.venv/</a>
+  <a href="#d-raw">data/raw/</a>
+  <a href="#d-metadata">data/metadata/</a>
+  <a href="#d-processed">data/processed/</a>
+  <a href="#d-embeddings">data/embeddings/</a>
+  <a href="#d-models">models/</a>
+  <a href="#d-src">src/</a>
+  <a href="#d-docs">docs/</a>
+  <a href="#d-report">mid term report/</a>
+</nav>
+
+<main>
+  <div class="eyebrow">E:\Major_Project_Gurveer</div>
+  <h1>A guide to this project folder</h1>
+  <p class="lede">This folder holds a B.Tech major project from Guru Nanak Dev Engineering College: a search system for Sri Guru Granth Sahib. You give it one line of Gurbani (a <b>Pankati</b>), and it finds other lines, from other Shabads, that carry the same meaning (<b>Bhavarth</b>), even when they share no words.</p>
+  <p class="lede">For example, <span class="g">ਵਿਸਰੀ ਤਿਸੈ ਪਰਾਈ ਤਾਤਾ</span> (Ang 189) and <span class="g">ਛਾਡਿ ਵਿਡਾਣੀ ਤਾਤਿ ਮੂੜੇ</span> (Ang 889) both teach giving up envy, yet have no word in common. Keyword search cannot connect them; this system is built to.</p>
+  <p class="intro-note">This page explains every folder and file: what it is, what made it, what uses it, and whether you should ever touch it. It describes the folder as of 24 October 2026.</p>
+
+  <section class="block" id="start">
+    <h2 class="part">Start here</h2>
+    <p class="intro-note">If you have ten minutes, open these, in this order.</p>
+    <div class="start">
+      <a href="#f-readme"><span class="n">1</span><span class="p">README.md</span><span class="d">Short introduction, setup steps and the main data decisions.</span></a>
+      <a href="#f-claude-md"><span class="n">2</span><span class="p">CLAUDE.md</span><span class="d">The most complete technical overview, including the current results.</span></a>
+      <a href="#f-state"><span class="n">3</span><span class="p">PROJECT_STATE.md</span><span class="d">Where the work stands today and what is left to do.</span></a>
+      <a href="#f-env-example"><span class="n">4</span><span class="p">.env.example</span><span class="d">Every setting the scripts read, in one file.</span></a>
+      <a href="#d-src"><span class="n">5</span><span class="p">src/</span><span class="d">All the project code, one folder per stage.</span></a>
+    </div>
+  </section>
+
+  <section class="block" id="tree">
+    <h2 class="part">The folder at a glance</h2>
+    <p class="intro-note">Click a name to jump to its explanation. Sizes are approximate.</p>
+    <div class="tree"><pre><a href="#d-root">Major_Project_Gurveer/</a>
+├── <a href="#d-claude">.claude/</a>               <span class="c">settings for the AI coding assistant</span>
+├── <a href="#d-venv">.venv/</a>                 <span class="c">installed Python libraries (do not edit)</span>
+├── <a href="#f-env">.env</a>                   <span class="c">real settings, includes a secret key</span>
+├── <a href="#f-env-example">.env.example</a>           <span class="c">settings template, safe to share</span>
+├── <a href="#f-readme">README.md</a> · <a href="#f-claude-md">CLAUDE.md</a> · <a href="#f-state">PROJECT_STATE.md</a>   <span class="c">documentation</span>
+├── <a href="#f-req">requirements*.txt</a>      <span class="c">lists of libraries to install</span>
+├── <a href="#g-legacy">collect_gurbani.py</a> …    <span class="c">original data-download scripts (7 .py, 1 notebook)</span>
+├── <a href="#d-data">data/</a>
+│   ├── <a href="#d-raw">raw/</a>               <span class="c">1,430 files, one per Ang, as downloaded (177 MB)</span>
+│   ├── <a href="#d-metadata">metadata/</a>          <span class="c">Raag list</span>
+│   ├── <a href="#d-processed">processed/</a>         <span class="c">the dataset and everything derived from it</span>
+│   └── <a href="#d-embeddings">embeddings/</a>        <span class="c">every verse turned into numbers, per model (5 × 225 MB)</span>
+├── <a href="#d-models">models/</a>                <span class="c">the fine-tuned models (small add-on files)</span>
+├── <a href="#d-src">src/</a>                   <span class="c">the code</span>
+│   ├── <a href="#g-src-pre">preprocessing/</a>     <span class="c">step 1: clean the data</span>
+│   ├── <a href="#g-src-train">training/</a>          <span class="c">steps 2, 4, 5, 6: build examples, train</span>
+│   ├── <a href="#g-src-eval">evaluation/</a>        <span class="c">step 3 and all scoring</span>
+│   ├── <a href="#g-src-ret">retrieval/</a>         <span class="c">encode the verses, search them</span>
+│   ├── <a href="#f-explain">explain/</a>           <span class="c">LLM explains why two verses match</span>
+│   ├── <a href="#f-api">api/</a>               <span class="c">web server</span>
+│   └── <a href="#f-web">web/</a>               <span class="c">the web page</span>
+├── <a href="#d-docs">docs/</a>                  <span class="c">plain-language write-ups (this page lives here)</span>
+└── <a href="#d-report">mid term report/</a>       <span class="c">college report, figures, slides</span></pre></div>
+  </section>
+
+  <section class="block" id="flow">
+    <h2 class="part">How the pieces connect</h2>
+    <p class="intro-note">The project is a chain of steps. Each step is one script that reads files made by the step before and writes new files. Nothing is overwritten in place, so any step can be re-run on its own.</p>
+    <ol class="flow">
+      <li><span class="what">Download the scripture and its commentaries</span><span class="how">The root scripts such as <code>collect_gurbani.py</code> fetched all 1,430 Angs from BaniDB and assembled the master spreadsheet <code>final_gurbani_dataset_all_steeks.xlsx</code> (60,360 lines, five Steeks each). This was done once.</span></li>
+      <li><span class="what">Clean it</span><span class="how"><code>src/preprocessing/clean_dataset.py</code> marks about 5,000 heading lines (such as <span class="g">ਪਉੜੀ ॥</span>) so they are left out of search, and profiles the data.</span></li>
+      <li><span class="what">Split it and build the searchable corpus</span><span class="how"><code>src/training/create_training_pairs.py</code> makes the list of 54,844 unique searchable verses, and splits the data into train / validation / test so that no Shabad appears in two parts.</span></li>
+      <li><span class="what">Build a test with known answers</span><span class="how"><code>src/evaluation/build_eval_sets.py</code> finds 827 test verses whose correct matches are known, by checking where two commentators explain verses alike.</span></li>
+      <li><span class="what">Build training examples</span><span class="how"><code>mine_verse_pairs.py</code> finds verse pairs that mean the same thing; <code>mine_hard_negatives.py</code> adds a look-alike verse with a different meaning to each pair.</span></li>
+      <li><span class="what">Teach the model (needs a GPU)</span><span class="how"><code>src/training/train_bge.py</code> fine-tunes the BGE-M3 language model on those examples. This ran on a separate desktop with an RTX 3060 and produced the folders in <code>models/</code>.</span></li>
+      <li><span class="what">Turn every verse into numbers</span><span class="how"><code>src/retrieval/build_index.py</code> converts each verse into 1,024 numbers that describe its meaning. Verses with similar meaning get similar numbers. Results go to <code>data/embeddings/</code>.</span></li>
+      <li><span class="what">Measure how good it is</span><span class="how"><code>src/evaluation/evaluate.py</code> scores every model, and keyword search, on the 827-question test.</span></li>
+      <li><span class="what">Search, explain, and show it</span><span class="how"><code>semantic_search.py</code> searches from the command line; <code>explain_match.py</code> asks a free LLM why two verses match; <code>src/api/app.py</code> and <code>src/web/index.html</code> put it all in a web page.</span></li>
+    </ol>
+  </section>
+
+  <section class="block" id="rules">
+    <h2 class="part">Rules worth knowing</h2>
+    <div class="rules">
+      <div class="rule"><b>Never edit the master spreadsheet.</b><code>data/processed/final_gurbani_dataset_all_steeks.xlsx</code> is the source of everything. Every script only reads it.</div>
+      <div class="rule"><b>Never share <code>.env</code>.</b>It contains a private API key. Share <code>.env.example</code> instead.</div>
+      <div class="rule"><b>Use the project's own Python.</b>Run scripts with <code>.venv</code> active. The older scripts in the project root are the exception: they used the computer's main Python.</div>
+      <div class="rule"><b>Training only works on the GPU desktop.</b>This laptop has no NVIDIA graphics card. Everything else runs here.</div>
+      <div class="rule"><b>One heavy job at a time on the laptop.</b>The web server and the reranker test together exceed the laptop's 11.8 GB of memory.</div>
+      <div class="rule"><b>This is not a git repository.</b>There is no undo history. Copy a file before making big changes to it.</div>
+    </div>
+  </section>
+
+  <section class="block" id="glossary">
+    <h2 class="part">Words used here</h2>
+    <div class="tablewrap"><table class="gloss">
+      <tr><td>Pankati</td><td>One line of Gurbani. The unit the search works on.</td></tr>
+      <tr><td>Shabad</td><td>A hymn: a group of consecutive Pankatis.</td></tr>
+      <tr><td>Ang</td><td>A page of Sri Guru Granth Sahib, numbered 1 to 1430.</td></tr>
+      <tr><td>Raag</td><td>The musical measure a Shabad is set in.</td></tr>
+      <tr><td>Steek</td><td>A scholar's commentary explaining a Pankati. The data has five: <code>ss</code> Sahib Singh, <code>bdb</code> BaniDB (a near-copy of ss), <code>ft</code> Faridkot Teeka (in Braj), <code>ms</code> Manmohan Singh, <code>pss</code> a word glossary.</td></tr>
+      <tr><td>Bhavarth</td><td>The contextual, spiritual meaning. What the search looks for.</td></tr>
+      <tr><td>Embedding</td><td>A list of 1,024 numbers that represents what a verse means. Similar meanings give similar numbers, so "find similar verses" becomes "find nearby numbers".</td></tr>
+      <tr><td>Tag</td><td>A name for one model's embeddings, such as <code>baseline</code> or <code>verse_hn</code>. Each tag is a folder in <code>data/embeddings/</code>.</td></tr>
+      <tr><td>Fine-tuning / LoRA</td><td>Teaching an existing language model a new skill. LoRA does this by training a small add-on (9 MB) instead of the whole 2.3 GB model.</td></tr>
+      <tr><td>Hard negative</td><td>A verse that shares many words with another but means something different. Used in training so the model stops matching on words alone.</td></tr>
+      <tr><td>Gold set</td><td>The test questions with known correct answers, used to score the system.</td></tr>
+      <tr><td>H@10, MRR</td><td>Scores. H@10 is the share of test questions where a correct answer appears in the top 10 results. MRR rewards putting it near the top.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="block" id="files">
+    <h2 class="part">Every file, folder by folder</h2>
+    <p class="intro-note">Type part of a name or a word such as "secret", "delete" or "train" to filter.</p>
+    <div class="tools">
+      <label for="q" hidden>Filter files</label>
+      <input id="q" type="search" placeholder="Filter: .env, embeddings, delete, report…" autocomplete="off">
+      <span class="count" id="count"></span>
+      <div class="legend">
+        <span class="badge k-setting">Setting</span><span class="badge k-script">Code</span><span class="badge k-data">Data</span><span class="badge k-model">Model</span><span class="badge k-report">Docs &amp; report</span>
+      </div>
+    </div>
+    <p class="empty" id="empty" hidden>No file matches that filter.</p>
+
+    <!-- ROOT -->
+    <div class="folder" id="d-root">
+      <header><span class="path">Project root</span><p>The top level of the folder: settings, documentation, the library lists, and the original data-download scripts.</p></header>
+
+      <article class="entry" id="f-env">
+        <div class="name"><code>.env</code><div class="tags"><span class="badge k-setting">Setting</span><span class="badge f-warn">Secret</span></div><span class="size">2 KB</span></div>
+        <div class="body">
+          <p>The real settings file. Every script reads its folder paths and tuning values from here, so no path is written inside the code. It also holds <code>LLM_API_KEY</code>, the private key for the free Groq LLM used for explanations.</p>
+          <ul>
+            <li>Folder paths: <code>DATA_DIR</code>, <code>PROCESSED_DATA_DIR</code>, <code>EMBEDDING_DIR</code>, <code>MODEL_DIR</code></li>
+            <li>Which Steeks to train on: <code>TRAIN_STEEK_COLS=steek_ss,steek_ft,steek_ms</code></li>
+            <li>Models: <code>EMBEDDING_MODEL</code> (BGE-M3), <code>RERANKER_MODEL</code>, <code>SEARCH_TAG=verse_hn</code></li>
+            <li>Search: <code>TOP_K</code> (results shown), <code>RETRIEVAL_K</code> (candidates checked)</li>
+            <li>Data split and mining thresholds: <code>TRAIN_FRAC</code>, <code>GOLD_THRESHOLD=0.30</code>, <code>VERSE_PAIR_*</code></li>
+            <li>LLM: <code>LLM_BASE_URL</code>, <code>LLM_MODEL</code>, <code>LLM_API_KEY</code></li>
+          </ul>
+          <dl><dt>Read by</dt><dd>every script in <code>src/</code></dd><dt>Note</dt><dd>Do not share or upload this file. Listed in <code>.gitignore</code> for that reason.</dd></dl>
+        </div>
+      </article>
+
+      <article class="entry" id="f-env-example">
+        <div class="name"><code>.env.example</code><div class="tags"><span class="badge k-setting">Setting</span><span class="badge f-kesri">Template</span></div><span class="size">1.5 KB</span></div>
+        <div class="body">
+          <p>A copy of <code>.env</code> without the secret, meant to be shared. On a new computer you copy it to <code>.env</code> and add your own key.</p>
+          <dl><dt>Known issue</dt><dd>It has fallen behind <code>.env</code>: it still says <code>GOLD_THRESHOLD=0.35</code> (the correct value is 0.30) and lacks the <code>VERSE_PAIR_*</code> settings. Copy those across from <code>.env</code> before relying on it.</dd></dl>
+        </div>
+      </article>
+
+      <article class="entry" id="f-gitignore">
+        <div class="name"><code>.gitignore</code><div class="tags"><span class="badge k-setting">Setting</span></div><span class="size">57 bytes</span></div>
+        <div class="body"><p>Tells the git version-control tool which files never to upload: <code>.env</code>, <code>.venv/</code>, Python caches, <code>data/embeddings/</code> and <code>models/</code>. The folder is not a git repository yet, so this has no effect until someone runs <code>git init</code>.</p></div>
+      </article>
+
+      <article class="entry" id="f-readme">
+        <div class="name"><code>README.md</code><div class="tags"><span class="badge k-report">Docs</span><span class="badge f-warn">Partly outdated</span></div><span class="size">4 KB</span></div>
+        <div class="body"><p>The front-page introduction: what the project does, how to install it, the first five pipeline steps, and why some Steeks are left out of training.</p>
+        <dl><dt>Known issue</dt><dd>Written before the later stages. It describes the first training approach (verse matched to its own commentary), which the project later replaced, and stops at step 5. <code>CLAUDE.md</code> is current.</dd></dl></div>
+      </article>
+
+      <article class="entry" id="f-claude-md">
+        <div class="name"><code>CLAUDE.md</code><div class="tags"><span class="badge k-report">Docs</span></div><span class="size">19 KB</span></div>
+        <div class="body"><p>Instructions for Claude Code, the AI coding assistant used on this project. It is loaded automatically at the start of every assistant session. It also happens to be the best technical overview for a person: every command, the architecture, the current results table, the Gurmukhi text-handling traps, and the design decisions that must not be undone.</p></div>
+      </article>
+
+      <article class="entry" id="f-state">
+        <div class="name"><code>PROJECT_STATE.md</code><div class="tags"><span class="badge k-report">Docs</span></div><span class="size">24 KB</span></div>
+        <div class="body"><p>A progress log written so a new work session can pick up where the last one stopped: what is finished, what is in progress, every experiment and its result, what failed and why, and the next steps.</p></div>
+      </article>
+
+      <article class="entry" id="f-req">
+        <div class="name"><code>requirements.txt</code><br><code>requirements-cpu.txt</code><br><code>requirements-gpu.txt</code><div class="tags"><span class="badge k-setting">Setting</span></div><span class="size">under 1 KB each</span></div>
+        <div class="body">
+          <p>Lists of Python libraries to install. Use the one that matches the computer:</p>
+          <ul>
+            <li><code>requirements-cpu.txt</code> for a laptop without an NVIDIA card. Installs the small CPU version of PyTorch.</li>
+            <li><code>requirements-gpu.txt</code> for the training desktop. Installs the CUDA version of PyTorch plus the training libraries (<code>peft</code>, <code>accelerate</code>, <code>datasets</code>).</li>
+            <li><code>requirements.txt</code> is the shared list both of the others include. Do not install it on its own: it deliberately leaves out PyTorch.</li>
+          </ul>
+          <dl><dt>Known issue</dt><dd><code>pygments</code>, <code>pillow</code> and <code>pymupdf</code> are needed to regenerate report figures but are in none of these files.</dd></dl>
+        </div>
+      </article>
+
+      <div id="g-legacy"></div>
+      <article class="entry">
+        <div class="name"><code>collect_gurbani.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Original data download</span></div><span class="size">11 KB</span></div>
+        <div class="body"><p>The very first script. It downloaded every Ang (1 to 1430) of Sri Guru Granth Sahib from BaniDB using the <code>banidb</code> Python library, saved each Ang's raw reply in <code>data/raw/</code>, and built the first table, <code>gurbani_full_dataset.csv</code>, plus <code>gurbani_semantic_dataset.csv</code>. Angs that failed to download were to be listed in <code>failed_angs.json</code> (none did).</p>
+        <dl><dt>Runs with</dt><dd>the computer's main Python, not <code>.venv</code></dd><dt>Status</dt><dd>finished; only needed to rebuild the data from scratch</dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>collecting_metadata.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Original data download</span></div><span class="size">1 KB</span></div>
+        <div class="body"><p>Fetched each Shabad's writer and starting Ang from BaniDB and added them to the table, producing <code>gurbani_full_dataset_enriched.csv</code>.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>collecting_raag.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Original data download</span></div><span class="size">5 KB</span></div>
+        <div class="body"><p>Downloaded the list of Raags (with their Ang ranges, themes and musical details) and writers from the BaniDB web API and saved it as <code>raag_metadata.csv</code>. The copy in use today is <code>data/metadata/raag_metadata.csv</code>.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>adding_raag_id_script.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Original data download</span></div><span class="size">5 KB</span></div>
+        <div class="body"><p>Gave every line a Raag number by checking which Raag's Ang range it falls in. Produced <code>gurbani_enriched_with_raag_id.csv</code>.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>adding_other_sources.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Original data download</span></div><span class="size">6 KB</span></div>
+        <div class="body"><p>The first download kept only Sahib Singh's Steek. This script went back to the raw files in <code>data/raw/</code> and added the other four (bdb, ft, ms, pss), producing <code>gurbani_full_dataset_all_steeks.csv</code>.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>banidb_test.py</code><br><code>inspection.py</code><br><code>inspection.ipynb</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Exploration</span></div><span class="size">117 B · 2 KB · 400 KB</span></div>
+        <div class="body"><p>Scratch work from the start of the project, used to learn what the <code>banidb</code> library offers and what its replies look like (functions such as <code>angs</code>, <code>shabad</code>, <code>raags</code>). The notebook has 21 small exploration cells with their outputs. Nothing depends on these.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>banidb_raag_source.txt</code><br><code>banidb_raags_source.txt</code><div class="tags"><span class="badge k-report">Reference</span></div><span class="size">2 KB · 0.5 KB</span></div>
+        <div class="body"><p>Copies of two functions from inside the <code>banidb</code> library (<code>raag</code> and <code>raags</code>), saved to understand how it fetches Raag data. Reference only.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>cache.dat</code><div class="tags"><span class="badge k-data">Data</span><span class="badge f-kesri">Safe to delete</span></div><span class="size">375 KB</span></div>
+        <div class="body"><p>The <code>banidb</code> library's own download cache, in Python's binary "pickle" format. It saves repeat requests to BaniDB. If deleted, the library rebuilds it the next time a download script runs.</p></div>
+      </article>
+    </div>
+
+    <!-- .claude -->
+    <div class="folder" id="d-claude">
+      <header><span class="path">.claude/</span><p>Settings for Claude Code, the AI coding assistant. Not part of the project itself.</p></header>
+      <article class="entry">
+        <div class="name"><code>.claude/launch.json</code><div class="tags"><span class="badge k-setting">Setting</span></div><span class="size">273 B</span></div>
+        <div class="body"><p>Tells the assistant's built-in browser how to start the project's web server (<code>python -m uvicorn src.api.app:app --port 8000</code>) so it can preview the web page.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>.claude/settings.local.json</code><div class="tags"><span class="badge k-setting">Setting</span></div><span class="size">2 KB</span></div>
+        <div class="body"><p>A list of commands the assistant was allowed to run on this computer without asking each time. Specific to this machine and safe to ignore.</p></div>
+      </article>
+    </div>
+
+    <!-- .venv -->
+    <div class="folder" id="d-venv">
+      <header><span class="path">.venv/</span><p>The project's private Python installation: Python itself plus every library from the requirements files, kept separate from the rest of the computer.</p></header>
+      <article class="entry">
+        <div class="name"><code>.venv/</code><div class="tags"><span class="badge k-setting">Environment</span><span class="badge f-warn">Do not edit</span></div><span class="size">several GB</span></div>
+        <div class="body"><p>Switch it on with <code>.\.venv\Scripts\Activate.ps1</code> before running any script in <code>src/</code>. Never edit files inside it. If it breaks, delete it and recreate it with <code>python -m venv .venv</code> and <code>pip install -r requirements-cpu.txt</code>.</p></div>
+      </article>
+    </div>
+
+    <!-- data/raw -->
+    <div id="d-data"></div>
+    <div class="folder" id="d-raw">
+      <header><span class="path">data/raw/</span><p>The scripture exactly as it was downloaded from BaniDB, untouched.</p></header>
+      <article class="entry">
+        <div class="name"><code>ang_1.json</code> … <code>ang_1430.json</code><div class="tags"><span class="badge k-data">Data</span><span class="badge f-warn">Keep</span></div><span class="size">1,430 files · 177 MB</span></div>
+        <div class="body"><p>One file per Ang, exactly as BaniDB returned it. Each holds every line on that page with its verse and Shabad numbers, the Gurmukhi text, and BaniDB's explanations of it in Punjabi, English, Hindi and Spanish, grouped by source. This is the original source behind everything else; keep it.</p>
+        <dl><dt>Made by</dt><dd><code>collect_gurbani.py</code></dd><dt>Read by</dt><dd><code>collect_gurbani.py</code>, <code>adding_other_sources.py</code></dd></dl></div>
+      </article>
+    </div>
+
+    <!-- data/metadata -->
+    <div class="folder" id="d-metadata">
+      <header><span class="path">data/metadata/</span><p>Reference information about the scripture that is not line-by-line text.</p></header>
+      <article class="entry">
+        <div class="name"><code>raag_metadata.csv</code><div class="tags"><span class="badge k-data">Data</span></div><span class="size">50 KB</span></div>
+        <div class="body"><p>One row per Raag: its number, Gurmukhi and English name, Ang range, time of day, themes, mood, scale details and writers.</p>
+        <dl><dt>Made by</dt><dd><code>collecting_raag.py</code></dd><dt>Read by</dt><dd><code>clean_dataset.py</code> (to recognise Raag headings), <code>semantic_search.py</code>, <code>explain_match.py</code>, the web server (to show Raag names)</dd></dl></div>
+      </article>
+    </div>
+
+    <!-- data/processed -->
+    <div class="folder" id="d-processed">
+      <header><span class="path">data/processed/</span><p>The dataset and everything the pipeline derives from it. Grouped below by what made each file.</p></header>
+
+      <article class="entry">
+        <div class="name"><code>final_gurbani_dataset_all_steeks.xlsx</code><div class="tags"><span class="badge k-data">Data</span><span class="badge f-warn">Never edit</span></div><span class="size">19 MB · 60,360 rows</span></div>
+        <div class="body"><p><b>The master dataset.</b> Every line of Sri Guru Granth Sahib with its Ang, Shabad, Raag, writer and five Steeks, in 13 columns. It was assembled from the download scripts' output; the <code>_cleaned</code> and <code>_edited</code> files below suggest the last steps were done by hand in Excel. Every pipeline step starts from this file and only reads it.</p></div>
+      </article>
+
+      <article class="entry">
+        <div class="name"><code>gurbani_full_dataset.csv</code><br><code>gurbani_semantic_dataset.csv</code><br><code>gurbani_full_dataset_enriched.csv</code><br><code>gurbani_enriched_with_raag_id.csv</code><br><code>gurbani_enriched_with_raag_id_cleaned.xlsx</code><br><code>gurbani_full_dataset_all_steeks.csv</code><br><code>gurbani_full_dataset_all_steeks_edited.xlsx</code><div class="tags"><span class="badge k-data">Data</span><span class="badge f-kesri">Intermediate</span></div><span class="size">10–87 MB each, ~290 MB total</span></div>
+        <div class="body"><p>The steps on the way to the master dataset, from the original download scripts: first the plain table, then with writers added, then with Raag numbers, then a cleaned spreadsheet, then with all five Steeks, then an edited spreadsheet. None of the code in <code>src/</code> uses them. They are kept as a record of how the master file was built; they could be archived elsewhere to save space.</p></div>
+      </article>
+
+      <article class="entry">
+        <div class="name"><code>failed_angs.json</code><div class="tags"><span class="badge k-data">Data</span></div><span class="size">2 bytes</span></div>
+        <div class="body"><p>The list of Angs that failed to download. It contains <code>[]</code>, meaning all 1,430 downloaded successfully.</p></div>
+      </article>
+
+      <article class="entry">
+        <div class="name"><code>cleaned_gurbani.csv</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">69 MB</span></div>
+        <div class="body"><p>The master dataset with extra columns added: whether each line is a heading, whether it repeats elsewhere, how many Steeks it has. Nothing is removed; headings are only marked.</p>
+        <dl><dt>Made by</dt><dd><code>clean_dataset.py</code> (step 1)</dd><dt>Read by</dt><dd>steps 2 to 5</dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>profile_report.txt</code><div class="tags"><span class="badge k-report">Report</span></div><span class="size">1.5 KB</span></div>
+        <div class="body"><p>A readable summary of the data from step 1: row counts, how many lines have each Steek, how many headings were found. This is where it was discovered that the BaniDB Steek is a 99.9% copy of Sahib Singh's.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>flagged_structural_review.csv</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">285 KB</span></div>
+        <div class="body"><p>Every line marked as a heading, with the reason, so a person can check that no real verse was excluded by mistake.</p></div>
+      </article>
+
+      <article class="entry">
+        <div class="name"><code>corpus_pankatis.jsonl</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">61 MB · 54,844 lines</span></div>
+        <div class="body"><p>The searchable collection: one entry per unique verse, with every place it occurs (Ang, Shabad, Raag) and all its Steeks. A verse that repeats in the scripture appears once here. ".jsonl" means one JSON record per line.</p>
+        <dl><dt>Made by</dt><dd><code>create_training_pairs.py</code> (step 2)</dd><dt>Read by</dt><dd><code>build_index.py</code>, search, evaluation, explanation, web server</dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>training_pairs.jsonl</code><br><code>val_pairs.jsonl</code><br><code>test_pairs.jsonl</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">59 MB · 7.5 MB · 7.4 MB</span></div>
+        <div class="body"><p>Verse-and-commentary pairs (131,806 / 16,457 / 16,515), split 80 / 10 / 10. They trained the first model, the one tagged <code>finetuned</code>. That approach did not improve verse-to-verse search, so the final model trains on verse pairs instead. The test pairs are still used by <code>diagnose_transfer.py</code>.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>row_splits.csv</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">1.2 MB</span></div>
+        <div class="body"><p>Which part (train, validation or test) each line of the dataset belongs to, and its group number. Lines that share a Shabad, identical text or identical commentary are kept in one group, so the test never contains near-copies of training lines. Later steps read this instead of re-deciding.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>pairs_report.txt</code><div class="tags"><span class="badge k-report">Report</span></div><span class="size">1 KB</span></div>
+        <div class="body"><p>Summary of step 2, including the check that the three parts share nothing (all 12 overlap counts are zero).</p></div>
+      </article>
+
+      <article class="entry">
+        <div class="name"><code>eval_semantic_pairs.jsonl</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">613 KB · 827 questions</span></div>
+        <div class="body"><p>The test with known answers. Each record is a test verse plus the verses that count as correct matches, found where both Sahib Singh and Manmohan Singh explain two verses alike. All matches come from other Shabads.</p>
+        <dl><dt>Made by</dt><dd><code>build_eval_sets.py</code> (step 3)</dd><dt>Read by</dt><dd><code>evaluate.py</code>, <code>evaluate_rerank.py</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>eval_report.txt</code><div class="tags"><span class="badge k-report">Report</span></div><span class="size">1 KB</span></div>
+        <div class="body"><p>Summary of the test: 827 questions, 1,758 correct matches, 18.9% of which share no word with their question.</p></div>
+      </article>
+
+      <article class="entry">
+        <div class="name"><code>verse_pairs.jsonl</code><br><code>verse_pairs_report.txt</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">1.7 MB · 5,717 pairs</span></div>
+        <div class="body"><p>Pairs of verses that mean the same thing, found with the same two-commentator rule as the test but only within the training part. These taught the model the actual task. The report summarises them.</p>
+        <dl><dt>Made by</dt><dd><code>mine_verse_pairs.py</code> (step 4)</dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>verse_pairs_hn.jsonl</code><br><code>hard_negatives_report.txt</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">2.2 MB · 5,343 triplets</span></div>
+        <div class="body"><p>The same pairs with a third verse added to each: one that shares many words but means something different (a "hard negative"). The final model, <code>verse_hn</code>, was trained on this file.</p>
+        <dl><dt>Made by</dt><dd><code>mine_hard_negatives.py</code> (step 5)</dd></dl></div>
+      </article>
+
+      <article class="entry">
+        <div class="name"><code>baseline_results.txt</code><div class="tags"><span class="badge k-report">Results</span></div><span class="size">1.5 KB</span></div>
+        <div class="body"><p><b>The main results table.</b> Despite the name, it holds the scores of every system (two keyword searches and five models) on the 827-question test. <code>verse_hn</code> is best on most measures. Rewritten each time <code>evaluate.py</code> runs.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>gpu_results_919q.txt</code><div class="tags"><span class="badge k-report">Results</span><span class="badge f-warn">Outdated</span></div><span class="size">1 KB</span></div>
+        <div class="body"><p>Older results from the training desktop, measured on an earlier 919-question test that was built with a text-splitting bug. Kept for the record; its numbers cannot be compared with the current results. The mid-term report and slides still use these numbers.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>rerank_results.txt</code><br><code>rerank_results_fair.txt</code><div class="tags"><span class="badge k-report">Results</span></div><span class="size">1 KB each</span></div>
+        <div class="body"><p>Tests of an optional second-pass "reranker" model that re-orders the top results. <code>rerank_results.txt</code> is a 20-question timing run, too small to draw conclusions from. <code>rerank_results_fair.txt</code> is the proper 200-question comparison: the reranker made results worse on its own and gave no real gain when combined with the final model, so it is not used in the search.</p>
+        <dl><dt>Made by</dt><dd><code>evaluate_rerank.py</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>explanations_cache.jsonl</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">4 KB · grows with use</span></div>
+        <div class="body"><p>Saved answers from the LLM explanation feature. When the same pair of verses is asked about again, the saved answer is reused, which keeps the free API quota for new questions.</p>
+        <dl><dt>Made by</dt><dd><code>explain_match.py</code> and the web server</dd></dl></div>
+      </article>
+    </div>
+
+    <!-- embeddings -->
+    <div class="folder" id="d-embeddings">
+      <header><span class="path">data/embeddings/</span><p>Every one of the 54,844 verses converted into 1,024 numbers, once per model. Each sub-folder is a "tag": the same verses, encoded by a different model, so models can be compared side by side. Rebuilding one takes about 2 hours on the laptop or 3 minutes on the GPU desktop.</p></header>
+      <article class="entry">
+        <div class="name"><code>&lt;tag&gt;/embeddings.npy</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">225 MB each</span></div>
+        <div class="body"><p>A table of 54,844 rows × 1,024 numbers in NumPy's format. Row <i>n</i> is the meaning of verse <i>n</i>. Searching means finding the rows closest to the question's row, which takes under a second.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>&lt;tag&gt;/corpus_meta.jsonl</code><div class="tags"><span class="badge k-data">Output</span></div><span class="size">11 MB each</span></div>
+        <div class="body"><p>Which verse each row of <code>embeddings.npy</code> belongs to, with its Shabads and Ang. Identical in all five tags.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>&lt;tag&gt;/model.json</code><div class="tags"><span class="badge k-setting">Setting</span></div><span class="size">tiny</span></div>
+        <div class="body"><p>Names the model that built the tag. Typed-in text that is not already in the collection must be converted by that same model, so the search reads this file to load the right one. Present for <code>baseline</code>, <code>verse_hn</code> and <code>mixed</code>.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name">The five tags</div>
+        <div class="body"><ul>
+          <li><code>baseline</code>: the original BGE-M3 model, not trained on Gurbani. It scores below keyword search, which is why training was needed.</li>
+          <li><code>finetuned</code>: trained on verse-and-commentary pairs. No better than baseline on the real task.</li>
+          <li><code>verse</code>: trained on verse-and-verse pairs.</li>
+          <li><code>verse_hn</code>: verse pairs plus hard negatives. <b>The final model</b>, used by default.</li>
+          <li><code>mixed</code>: a further experiment on 40,000 mixed pairs. Weaker overall.</li>
+        </ul></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>baseline/part_000000.npy</code> … <code>part_054000.npy</code><div class="tags"><span class="badge k-data">Output</span><span class="badge f-kesri">Safe to delete</span></div><span class="size">28 files · 8 MB each</span></div>
+        <div class="body"><p>Checkpoints saved every 2,000 verses while <code>baseline</code> was being built on the laptop, so an interrupted run could resume. Now that <code>embeddings.npy</code> exists they are duplicates and can be deleted.</p></div>
+      </article>
+    </div>
+
+    <!-- models -->
+    <div class="folder" id="d-models">
+      <header><span class="path">models/</span><p>The trained models. Each is a small add-on (LoRA adapter) on top of the BGE-M3 base model, not a full copy of it. The 2.3 GB base model is downloaded automatically into the Hugging Face cache (<code>C:\Users\Lenovo\.cache\huggingface</code>), as is the 2.3 GB reranker model.</p></header>
+      <article class="entry">
+        <div class="name"><code>bge-m3-verse-hn/</code><div class="tags"><span class="badge k-model">Model</span><span class="badge f-kesri">Final model</span></div><span class="size">27 MB</span></div>
+        <div class="body"><p>The final model, trained on the 5,343 verse triplets with hard negatives. Builds and searches the <code>verse_hn</code> tag. Checked to reproduce its stored embeddings exactly.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>bge-m3-mixed/</code><div class="tags"><span class="badge k-model">Model</span></div><span class="size">27 MB</span></div>
+        <div class="body"><p>The experimental model behind the <code>mixed</code> tag: 40,000 training pairs, 3 rounds of training. Not used by default.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name">Inside each model folder</div>
+        <div class="body"><ul>
+          <li><code>adapter_model.safetensors</code> (9 MB): the learned weights. This is what training produced.</li>
+          <li><code>adapter_config.json</code>: the add-on's settings (rank 16, applied to the attention layers).</li>
+          <li><code>tokenizer.json</code>, <code>tokenizer_config.json</code>: how text is split into pieces the model reads. Copied from BGE-M3.</li>
+          <li><code>modules.json</code>, <code>sentence_bert_config.json</code>, <code>config_sentence_transformers.json</code>: how the parts are assembled into one model, and the maximum text length.</li>
+          <li><code>1_Pooling/</code>, <code>2_Normalize/</code>: the last two stages, which turn the model's output into one fixed-length list of numbers.</li>
+          <li><code>README.md</code>: an automatically written summary of the training run (data size, loss, settings).</li>
+          <li><code>checkpoints/</code>: snapshots from mid-training, including optimiser state. Only needed to resume training; safe to delete.</li>
+        </ul></div>
+      </article>
+    </div>
+
+    <!-- src -->
+    <div class="folder" id="d-src">
+      <header><span class="path">src/</span><p>All the project code. Each script is a self-contained step: run it from the project root with <code>.venv</code> active, for example <code>python src\evaluation\evaluate.py</code>. Every script begins with a description of what it reads and writes. <code>__pycache__/</code> folders are Python's automatic speed-up files and can be ignored or deleted.</p></header>
+
+      <div id="g-src-pre"></div>
+      <article class="entry">
+        <div class="name"><code>preprocessing/clean_dataset.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Step 1</span></div><span class="size">14 KB</span></div>
+        <div class="body"><p>Reads the master spreadsheet and marks heading lines so they can be left out of search. The source's own heading flag caught only 720 of about 5,000; this adds pattern rules, a Raag-name list, and a safeguard that keeps long lines all three commentators explained (so <span class="g">ਰਾਗੁ ਨਾਦੁ ਸਭੁ ਸਚੁ ਹੈ…</span> is not mistaken for a Raag heading).</p>
+        <dl><dt>Writes</dt><dd><code>cleaned_gurbani.csv</code>, <code>profile_report.txt</code>, <code>flagged_structural_review.csv</code></dd></dl></div>
+      </article>
+
+      <div id="g-src-train"></div>
+      <article class="entry">
+        <div class="name"><code>training/create_training_pairs.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Step 2</span></div><span class="size">10 KB</span></div>
+        <div class="body"><p>Builds the searchable collection, splits the data into train / validation / test without letting a Shabad cross the line, and writes verse-and-commentary training pairs.</p>
+        <dl><dt>Writes</dt><dd><code>corpus_pankatis.jsonl</code>, <code>training/val/test_pairs.jsonl</code>, <code>row_splits.csv</code>, <code>pairs_report.txt</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>training/mine_verse_pairs.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Step 4</span></div><span class="size">8 KB</span></div>
+        <div class="body"><p>Finds pairs of verses that mean the same thing, using only training data. Drops pairs that share most of their words, because those would teach word-matching instead of meaning.</p>
+        <dl><dt>Writes</dt><dd><code>verse_pairs.jsonl</code>, <code>verse_pairs_report.txt</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>training/mine_hard_negatives.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Step 5</span></div><span class="size">9 KB</span></div>
+        <div class="body"><p>For each pair, finds a verse that looks similar but means something different, such as <span class="g">ਜੰਮਣੁ ਮਰਣੁ ਨ ਚੁਕਈ</span> ("the cycle never ends") against <span class="g">ਜੰਮਣੁ ਮਰਣਾ ਠਾਕਿ ਰਹਾਏ</span> ("he stops the cycle").</p>
+        <dl><dt>Writes</dt><dd><code>verse_pairs_hn.jsonl</code>, <code>hard_negatives_report.txt</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>training/train_bge.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Step 6 · GPU only</span></div><span class="size">12 KB</span></div>
+        <div class="body"><p>Fine-tunes BGE-M3 with LoRA. Stops with a clear message on a computer without an NVIDIA card. After training it checks that the model really changed and reloads correctly from disk. Always pass <code>--output models\&lt;new name&gt;</code>; the default folder name is reused and would overwrite an earlier model.</p>
+        <dl><dt>Example</dt><dd><code>python src\training\train_bge.py --pairs verse_pairs_hn.jsonl --lora --batch-size 64 --epochs 5 --output models\bge-m3-verse-hn</code></dd></dl></div>
+      </article>
+
+      <div id="g-src-eval"></div>
+      <article class="entry">
+        <div class="name"><code>evaluation/build_eval_sets.py</code><div class="tags"><span class="badge k-script">Code</span><span class="badge f-kesri">Step 3</span></div><span class="size">10 KB</span></div>
+        <div class="body"><p>Builds the 827-question test from the test part of the data, using two-commentator agreement.</p>
+        <dl><dt>Writes</dt><dd><code>eval_semantic_pairs.jsonl</code>, <code>eval_report.txt</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>evaluation/evaluate.py</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">9 KB</span></div>
+        <div class="body"><p>Scores any number of systems on the test, including two keyword searches as the comparison point. Takes about a minute per model on the laptop.</p>
+        <dl><dt>Example</dt><dd><code>python src\evaluation\evaluate.py --bm25 --bm25-char --dense baseline --dense verse_hn</code></dd><dt>Writes</dt><dd><code>baseline_results.txt</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>evaluation/evaluate_rerank.py</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">11 KB</span></div>
+        <div class="body"><p>Tests whether a second model (BGE reranker) improves the order of the top results. It can compare the verses themselves, the Faridkot Steeks, or the Sahib Singh Steeks; the last is flagged as optimistic because the test itself was built from Sahib Singh's Steeks. Slow on the laptop: about 20 minutes per 200 questions. Result: no gain, so the reranker is not used in the search.</p>
+        <dl><dt>Writes</dt><dd><code>rerank_results*.txt</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>evaluation/diagnose_transfer.py</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">5 KB</span></div>
+        <div class="body"><p>A diagnostic that showed why the first model did not help: training improved finding a verse from its commentary (38% to 62%) but not finding similar verses. That finding led to training on verse pairs.</p></div>
+      </article>
+
+      <div id="g-src-ret"></div>
+      <article class="entry">
+        <div class="name"><code>retrieval/build_index.py</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">5 KB</span></div>
+        <div class="body"><p>Converts all 54,844 verses into embeddings with a chosen model and saves them under a tag. Saves progress every 2,000 verses so it can resume. Also writes <code>model.json</code>.</p>
+        <dl><dt>Example</dt><dd><code>python src\retrieval\build_index.py --model models\bge-m3-verse-hn --tag verse_hn</code></dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>retrieval/semantic_search.py</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">10 KB</span></div>
+        <div class="body"><p>Search from the command line. Type a verse (with or without the <span class="g">॥</span> and verse numbers, or just part of it), several verses, or a whole Shabad, and get matching verses from other Shabads with their Ang, Raag and Steek. <code>--compare baseline</code> shows two models side by side. A verse already in the collection is answered instantly; other text loads the model and takes about 30 seconds the first time.</p>
+        <dl><dt>Example</dt><dd><code>python src\retrieval\semantic_search.py --pankati "ਜਤ ਕਤ ਦੇਖਉ ਤਤ ਰਹਿਆ ਸਮਾਇ"</code></dd></dl></div>
+      </article>
+
+      <article class="entry" id="f-explain">
+        <div class="name"><code>explain/explain_match.py</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">13 KB</span></div>
+        <div class="body"><p>Explains why two verses were matched. It sends both verses and all their Steeks to a free LLM (Groq's <code>gpt-oss-120b</code> by default) and gets back the shared meaning in Punjabi and English, an explanation citing the Steeks, and a verdict: same, related, or different. The verdict catches the search's mistakes, for example verses that share words but teach the opposite. Answers are saved so a pair is never asked twice. Any provider with an OpenAI-style interface works (Groq, Gemini, OpenRouter) by changing <code>.env</code>.</p>
+        <dl><dt>Example</dt><dd><code>python src\explain\explain_match.py --query "ਵਿਸਰੀ ਤਿਸੈ ਪਰਾਈ ਤਾਤਾ" --top 3</code></dd><dt>Needs</dt><dd><code>LLM_API_KEY</code> in <code>.env</code></dd></dl></div>
+      </article>
+
+      <article class="entry" id="f-api">
+        <div class="name"><code>api/app.py</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">9 KB</span></div>
+        <div class="body"><p>The web server. Loads the verses and the final model's embeddings once at start-up and answers three requests: <code>/api/search</code> (find matching verses), <code>/api/explain</code> (why two verses match) and <code>/api/health</code> (what is loaded). It also serves the web page. It reuses <code>explain_match.py</code> directly so the website and the command line give identical explanations.</p>
+        <dl><dt>Start it</dt><dd><code>python -m uvicorn src.api.app:app --port 8000</code>, then open http://localhost:8000</dd></dl></div>
+      </article>
+      <article class="entry" id="f-web">
+        <div class="name"><code>web/index.html</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">11 KB</span></div>
+        <div class="body"><p>The web page itself: a search box with example verses, result cards showing each verse with its Ang, Raag, Shabad and Sahib Singh Steek, a button for the other Steeks, and a "Why this match?" button that shows the LLM's explanation. Works in light and dark mode and on phones.</p></div>
+      </article>
+    </div>
+
+    <!-- docs -->
+    <div class="folder" id="d-docs">
+      <header><span class="path">docs/</span><p>Write-ups for people rather than for the code.</p></header>
+      <article class="entry">
+        <div class="name"><code>project-guide.html</code><div class="tags"><span class="badge k-report">Docs</span></div><span class="size">this page</span></div>
+        <div class="body"><p>This guide. Open it in any web browser.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>project-documentation.html</code><div class="tags"><span class="badge k-report">Docs</span><span class="badge f-warn">Outdated</span></div><span class="size">38 KB</span></div>
+        <div class="body"><p>An earlier plain-language description of the project, written in early September 2026. It predates the hard-negative model, the explanation feature and the web page, so treat it as background reading.</p></div>
+      </article>
+    </div>
+
+    <!-- report -->
+    <div class="folder" id="d-report">
+      <header><span class="path">mid term report/</span><p>The mid-term college submission and its presentation. Its numbers come from the older 919-question test and need updating to the current results.</p></header>
+      <article class="entry">
+        <div class="name"><code>Midterm_report.tex</code><div class="tags"><span class="badge k-report">Report</span></div><span class="size">50 KB</span></div>
+        <div class="body"><p>The report's source text in LaTeX. Must be compiled with <b>XeLaTeX</b>, not pdfLaTeX, because only XeLaTeX can typeset Gurmukhi. The Gurmukhi font is declared as <code>Nirmala UI</code> with <code>Script=Gurmukhi</code>; without that setting the vowel signs appear in the wrong place.</p>
+        <dl><dt>Compile</dt><dd><code>xelatex Midterm_report.tex</code>, <code>bibtex Midterm_report</code>, then <code>xelatex</code> twice more</dd></dl></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>Midterm_report.pdf</code><br><code>Midterm_report.synctex.gz</code><div class="tags"><span class="badge k-report">Report</span></div><span class="size">6.3 MB · 91 KB</span></div>
+        <div class="body"><p>The compiled report (36 pages), and a helper file that lets a LaTeX editor jump between a spot in the PDF and the matching source line. Both are regenerated on every compile.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>references.bib</code><div class="tags"><span class="badge k-report">Report</span></div><span class="size">4 KB</span></div>
+        <div class="body"><p>The 11 cited papers (BGE-M3, LoRA, Sentence-BERT, BM25 and others), used by <code>bibtex</code> to build the reference list.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>fig_diag_*.png</code><div class="tags"><span class="badge k-report">Figure</span><span class="badge f-warn">Only copy</span></div><span class="size">11 files</span></div>
+        <div class="body"><p>The design diagrams: architecture, data-flow diagrams (levels 0 and 1), use case, sequence, activity, components, deployment, data model, preprocessing, and the training objective. They were drawn in TikZ by a script (<code>diagrams.py</code>) that was lost when a temporary folder was cleared, so these images are the only copy. Changing one means redrawing it.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>fig_dataset_*.png</code><br><code>fig_code_*.png</code><br><code>fig_*_report.png</code><br><code>fig_output_*.png</code><br><code>fig_training_pairs.png</code><div class="tags"><span class="badge k-report">Figure</span></div><span class="size">18 files</span></div>
+        <div class="body"><p>Screenshots used in the report: samples of the raw and cleaned data (2), highlighted code (4), the text reports from each pipeline step (6), program output such as search results and training logs (5), and training examples (1). Made by rendering HTML in headless Chrome and cropping.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>logo-70-Edited.png</code><div class="tags"><span class="badge k-report">Figure</span></div><span class="size">933 KB</span></div>
+        <div class="body"><p>The college logo, used on the report's title page and the first slide.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>Midterm_presentation.pptx</code><div class="tags"><span class="badge k-report">Slides</span></div><span class="size">1.5 MB · 15 slides</span></div>
+        <div class="body"><p>The PowerPoint for the panel: objectives (word for word from the report), feasibility study, literature survey, method, results, testing, conclusion and references, with speaker notes on each slide.</p></div>
+      </article>
+      <article class="entry">
+        <div class="name"><code>build_presentation.js</code><div class="tags"><span class="badge k-script">Code</span></div><span class="size">32 KB</span></div>
+        <div class="body"><p>The script that generates <code>Midterm_presentation.pptx</code> (Node.js with the <code>pptxgenjs</code> library). Edit this and re-run it rather than editing the slides by hand, if the slides need regenerating. It refers to a theme helper inside the AI assistant's files, so it runs only on this computer as written.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <footer>Folder guide for the Semantic Retrieval and Contextual Exploration System · Guru Nanak Dev Engineering College, Ludhiana · describes the folder as of 24 October 2026.</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var input = document.getElementById("q");
+  var entries = Array.prototype.slice.call(document.querySelectorAll(".entry"));
+  var folders = Array.prototype.slice.call(document.querySelectorAll(".folder"));
+  var count = document.getElementById("count");
+  var empty = document.getElementById("empty");
+  entries.forEach(function(e){
+    var folder = e.closest(".folder");
+    var head = folder ? folder.querySelector(".path") : null;
+    e.dataset.text = ((head ? head.textContent + " " : "") + e.textContent).toLowerCase();
+  });
+  function apply(){
+    var q = input.value.trim().toLowerCase();
+    var shown = 0;
+    entries.forEach(function(e){
+      var hit = !q || e.dataset.text.indexOf(q) !== -1;
+      e.hidden = !hit;
+      if(hit) shown++;
+    });
+    folders.forEach(function(f){
+      var list = f.querySelectorAll(".entry");
+      if(!list.length) return;
+      var any = Array.prototype.some.call(list, function(e){ return !e.hidden; });
+      f.hidden = !any;
+    });
+    count.textContent = q ? shown + " shown" : entries.length + " entries";
+    empty.hidden = shown !== 0;
+  }
+  input.addEventListener("input", apply);
+  apply();
+})();
+</script>

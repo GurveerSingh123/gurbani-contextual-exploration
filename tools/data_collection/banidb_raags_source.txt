@@ -1,0 +1,17 @@
+def raags():
+    if cache.check('raags')[0] is True:
+        raags = cache.get()['raags']
+    else:
+        link = f"{url}/raags"
+        response = requests.get(link)
+        json_blob = response.json()
+        cache.put('raags', json_blob)
+    raags = []
+    for row in json_blob['rows'][1:]:
+        raag = {
+            'raag_id': row['RaagID'],
+            'raag_uni': row['RaagUnicode'],
+            'raag_eng': row['RaagEnglish']
+            }
+        raags.append(raag)
+    return raags

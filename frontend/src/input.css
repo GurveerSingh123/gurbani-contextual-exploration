@@ -1,0 +1,128 @@
+/* Tailwind source. Edit here or in index.html / assets/js, then rebuild:
+     npm run build:css        (writes assets/css/app.css) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { color-scheme: dark; scroll-behavior: smooth; }
+  body { @apply bg-night-950 text-mist-200 font-sans antialiased; }
+  ::selection { background: rgba(246,146,58,.35); color: #fff; }
+  :focus-visible { outline: 2px solid theme("colors.kesri.400"); outline-offset: 2px; }
+}
+
+/* The hidden attribute must win over display utilities such as .flex. */
+[hidden] { display: none !important; }
+
+@layer components {
+  /* Fixed glowing backdrop behind everything. */
+  .backdrop-glow {
+    @apply pointer-events-none fixed inset-0 -z-10;
+    background:
+      radial-gradient(60rem 40rem at 10% -10%, rgba(246,146,58,.08), transparent 60%),
+      radial-gradient(50rem 40rem at 105% 15%, rgba(22,195,176,.12), transparent 60%),
+      radial-gradient(40rem 30rem at 50% 110%, rgba(110,90,255,.10), transparent 60%),
+      theme("colors.night.950");
+  }
+  .grid-lines {
+    @apply pointer-events-none fixed inset-0 -z-10 opacity-[.07];
+    background-image: linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+  }
+
+  /* Glass card with a glowing edge. */
+  .glass {
+    @apply relative rounded-2xl border border-white/[.07] bg-night-850/70 shadow-glow-soft backdrop-blur-xl;
+  }
+  .glass-hover { @apply transition duration-300; }
+  .glass-hover:hover { @apply -translate-y-0.5 border-kesri-500/40; box-shadow: 0 0 0 1px rgba(246,146,58,.35), 0 0 12px -4px rgba(246,146,58,.45); }
+  .glass-teal:hover { @apply border-teal-500/40; box-shadow: 0 0 0 1px rgba(22,195,176,.35), 0 0 12px -4px rgba(22,195,176,.45); }
+  /* Focus glow on the search card: on the border only. (A blurred layer behind the
+     card showed through it and spread a golden haze over the whole area.) */
+  .glow-ring { @apply pointer-events-none absolute -inset-px rounded-2xl; box-shadow: 0 0 0 1px rgba(246,146,58,.45), 0 0 10px -2px rgba(246,146,58,.35); }
+
+  .gradient-text { @apply bg-gradient-to-r from-kesri-300 via-kesri-500 to-teal-400 bg-clip-text text-transparent; }
+
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition duration-200 disabled:cursor-wait disabled:opacity-60; }
+  .btn-primary { @apply btn bg-gradient-to-r from-kesri-500 to-kesri-600 text-night-950 shadow-glow-kesri hover:brightness-110; }
+  .btn-ghost { @apply btn border border-white/10 bg-white/[.03] text-mist-200 hover:border-kesri-500/50 hover:text-white; }
+  .btn-small { @apply rounded-lg px-3 py-1.5 text-xs font-semibold; }
+
+  .pill { @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[.04] px-3 py-1 text-xs text-mist-300; }
+  .chip-example { @apply rounded-full border border-white/10 bg-night-800/70 px-3 py-1 font-gurmukhi text-sm text-mist-200 transition hover:border-kesri-500/60 hover:text-white hover:shadow-glow-kesri; }
+
+  .tag { @apply inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider; }
+  .tag-both { @apply tag bg-kesri-500/15 text-kesri-300 ring-1 ring-kesri-500/30; }
+  .tag-meaning { @apply tag bg-violet-500/15 text-violet-300 ring-1 ring-violet-500/30; }
+  .tag-words { @apply tag bg-sky-500/15 text-sky-300 ring-1 ring-sky-500/30; }
+  .tag-nowords { @apply tag bg-teal-500/15 text-teal-300 ring-1 ring-teal-500/30; }
+
+  .pline { @apply -mx-3 rounded-lg px-3 py-0.5 font-gurbani text-lg leading-relaxed text-mist-300 sm:text-xl; }
+  .pline-best { @apply bg-kesri-500/10 font-semibold text-white ring-1 ring-kesri-500/30; text-shadow: 0 0 18px rgba(246,146,58,.35); }
+  .pline-best-teal { @apply bg-teal-500/10 ring-teal-500/30; text-shadow: 0 0 18px rgba(22,195,176,.35); }
+
+  .steek { @apply font-gurmukhi text-[15px] leading-relaxed text-mist-200; }
+
+  /* One-line LLM reason under each card's Steek: placeholder shimmer, then fades in. */
+  .reason { @apply mt-3 flex items-start gap-2 rounded-lg border border-violet-400/15 bg-violet-500/[.06] px-3 py-2 text-sm leading-relaxed text-mist-300; }
+  .reason-icon { @apply mt-0.5 shrink-0 text-violet-300; }
+  .reason-ready .reason-text { @apply animate-rise; }
+
+  /* "Show top 3 / 5 / 10" segmented control */
+  .topn-btn { @apply rounded-lg px-3.5 py-1 font-mono text-xs font-semibold text-mist-400 transition hover:text-white; }
+  .topn-active { @apply bg-kesri-500/20 text-kesri-200 ring-1 ring-kesri-500/40; box-shadow: 0 0 8px -3px rgba(246,146,58,.55); }
+  /* Search by Gurbani / Ask a question */
+  .mode-switch { @apply grid grid-cols-2 gap-1 rounded-xl border border-white/10 bg-night-950/50 p-1; }
+  .mode-btn { @apply flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-mist-400 transition hover:text-white; }
+  .mode-active { @apply bg-kesri-500/20 text-kesri-200 ring-1 ring-kesri-500/40; box-shadow: 0 0 8px -3px rgba(246,146,58,.55); }
+
+  /* Answers to a question */
+  .answer-glow { box-shadow: 0 0 0 1px rgba(246,146,58,.35), 0 0 12px -4px rgba(246,146,58,.4); }
+  .answer-block { @apply border-l-2 border-kesri-400/40 pl-4; }
+  .answer-block-title { @apply mb-1.5 text-xs font-semibold uppercase tracking-[.14em] text-kesri-300; }
+
+  .steek-label { @apply mr-2 font-sans text-[10px] font-semibold uppercase tracking-[.14em] text-mist-500; }
+
+  .verdict { @apply tag px-2.5 py-1 text-xs; }
+  .verdict-same { @apply verdict bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-400/40; box-shadow: 0 0 8px -3px rgba(52,211,153,.5); }
+  .verdict-related { @apply verdict bg-amber-500/15 text-amber-300 ring-1 ring-amber-400/40; box-shadow: 0 0 8px -3px rgba(251,191,36,.5); }
+  .verdict-different { @apply verdict bg-rose-500/15 text-rose-300 ring-1 ring-rose-400/40; box-shadow: 0 0 8px -3px rgba(251,113,133,.5); }
+
+  .skeleton { @apply relative overflow-hidden rounded-md bg-white/[.06]; }
+  .skeleton::after { content: ""; @apply absolute inset-0 -translate-x-full animate-shimmer; background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent); }
+
+  .section-title { @apply font-display text-xl font-bold text-white sm:text-2xl; }
+  .section-gurmukhi { @apply mt-1 font-gurmukhi text-base text-kesri-300/90; }
+  .section-sub { @apply mt-1 max-w-3xl text-sm text-mist-400; }
+
+  /* ੴ -- in the header, and large at the top of the page (never lower down). */
+  .ik-onkar-badge {
+    @apply flex h-10 w-10 items-center justify-center rounded-xl border border-kesri-500/40 bg-night-850 font-gurmukhi text-[22px] leading-none text-kesri-300;
+    /* Flex centres the glyph's text box, but ੴ's ink sits 0.21em above and 0.07em
+       right of that box's centre (measured in Noto Sans Gurmukhi). Uneven padding
+       shifts it back: content moves by half the difference. */
+    padding: 0.42em 0.14em 0 0;
+    box-shadow: 0 0 0 1px rgba(246,146,58,.2), 0 0 24px -4px rgba(246,146,58,.55);
+    text-shadow: 0 0 12px rgba(246,146,58,.6);
+  }
+  /* Solid colour + glow, NOT gradient-clipped text: ੴ's arc overhangs the glyph
+     box, and background-clip:text only paints inside the box -- it cut the arc off. */
+  .ik-onkar-hero {
+    @apply mx-auto inline-block px-8 pt-4 font-gurmukhi text-7xl leading-[1.2] sm:text-8xl;
+    color: #ffd3a0;
+    text-shadow: 0 0 18px rgba(246,146,58,.75), 0 0 48px rgba(246,146,58,.45), 0 0 90px rgba(246,146,58,.25);
+  }
+
+  /* Divider: fading kesri rules either side of a small Khanda. */
+  .ornament { @apply flex max-w-xs items-center gap-4 text-kesri-400/80; }
+  .ornament::before, .ornament::after { content: ""; @apply h-px flex-1; }
+  .ornament::before { background: linear-gradient(90deg, transparent, rgba(246,146,58,.6)); }
+  .ornament::after { background: linear-gradient(90deg, rgba(246,146,58,.6), transparent); }
+  .ornament span { @apply text-lg; text-shadow: 0 0 14px rgba(246,146,58,.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

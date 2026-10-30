@@ -1,0 +1,21 @@
+==============================================================================
+PANKATI -> PANKATI RETRIEVAL  (same-Shabad hits excluded)
+==============================================================================
+queries: 919    corpus: 54,844
+
+model                      H@1     H@5    H@10    H@50     MRR  nDCG@10
+-----------------------------------------------------------------------
+BM25 (char 3-5gram)       9.47   20.46   27.09   44.07   15.01    13.51
+dense: baseline           7.83   15.13   19.37   30.25   11.51     9.98
+dense: verse             11.43   21.65   28.29   45.27   16.77    14.38
+dense: verse_hn           9.79   21.55   26.66   42.22   15.13    13.18
+
+H@k = % of queries with at least one gold verse in the top k
+
+-- the subset keyword search cannot reach ---------------------------------
+queries whose gold includes a ZERO-word-overlap verse: 420
+  BM25 (char 3-5gram)    hit@10 on those:   1.19%
+  dense: baseline        hit@10 on those:   1.43%
+  dense: verse           hit@10 on those:   3.57%
+  dense: verse_hn        hit@10 on those:   4.05%
+==============================================================================

@@ -1,0 +1,15 @@
+# CUDA install for the training machine.
+#
+#   pip install -r requirements-gpu.txt
+#
+# cu121 suits most current NVIDIA drivers. Check `nvidia-smi` for the driver's
+# CUDA version and switch the index to cu118 / cu124 if needed:
+#   https://pytorch.org/get-started/locally/
+
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+-r requirements.txt
+torch
+accelerate
+datasets
+peft

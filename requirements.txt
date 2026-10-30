@@ -1,0 +1,24 @@
+# Core dependencies -- same on every machine.
+#
+# Do NOT install torch from here: the correct build depends on whether the
+# machine has a CUDA GPU. Install one of these instead, which pulls this file in:
+#
+#   pip install -r requirements-cpu.txt     (laptops, no NVIDIA GPU)
+#   pip install -r requirements-gpu.txt     (training machine with CUDA)
+
+pandas
+numpy
+openpyxl
+python-dotenv
+scikit-learn
+
+sentence-transformers
+rank_bm25
+faiss-cpu
+
+# LLM explanation layer (common/explain_match.py). Any OpenAI-compatible API, e.g. Groq (free).
+openai
+
+# Web interface (backend/app).
+fastapi
+uvicorn[standard]

@@ -1,0 +1,48 @@
+def raag(raag_id):
+    if 'raags' in cache.get().keys():
+        json_blob = cache.get()['raags']
+    else:
+        link = f"{url}/raags"
+        response = requests.get(link)
+        json_blob = response.json()
+    result = []
+    for row in json_blob['rows'][1:]:
+        if row['RaagID'] == raag_id:
+            info = row['SourceInfo'][0]
+            raag_data = {}
+            data = {
+                'raag_id': row['RaagID'],
+                'raag_uni': row['RaagUnicode'],
+                'raag': row['RaagEnglish'],
+                'time_of_raag': (row['StartTime'], row['EndTime']),
+                'common_themes': row['CommonThemes'],
+                'feeling': row['Feeling'],
+                'angs': {info['SourceID']: [info['Start'], info['End']]},
+                'overview': row['Overview'],
+                'advanced': row['Advanced'],
+                'musical_composure': row['MusicalComposure'],
+                'placement': row['Placement'],
+                'season': row['Season'],
+                'sargun': '',
+                'aroh': row['Sargun']['Aroh'],
+                'avroh': row['Sargun']['Avroh'],
+                'vadi': row['Sargun']['Vadi'],
+                'samvadi': row['Sargun']['Samvadi'],
+                'sur': row['Sargun']['Sur'],
+                'thaat': row['Sargun']['Thaat'],
+                'jaati': row['Jaati']
+                }
+            data['writers'] = []
+            if row['Writers'] != []:
+                writer_url = f"{url}/writers"
+                wres = requests.get(writer_url)
+                wjs = wres.json()
+                for writer in row['Writers']:  # provides list of writer names
+                    for writer_row in wjs['rows']:
+                        if writer_row['WriterID'] == writer:
+                            data['writers'].append(writer_row['WriterEnglish'])
+            for k in data.keys():  # removes empty or null data values
+                if data[k] is not None and data[k] != '':
+                    raag_data[k] = data[k]
+            result.append(raag_data)
+    return result

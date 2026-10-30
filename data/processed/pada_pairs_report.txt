@@ -1,0 +1,21 @@
+==================================================================
+PADA <-> PADA TRAINING PAIRS  (with hard negatives)
+==================================================================
+Positive rule : min(ss, ms) combined-Steek tf-idf in [0.15, 0.97], cross-Shabad, word overlap <= 0.6, max 3 per pada
+Negative rule : verse tf-idf in [0.25, 0.9], meaning <= 0.05 and <= positive's agreement - 0.1
+
+[train]
+  padas in pool            : 14,726
+  padas with a positive    : 2,349 (16.0%)
+  positive pairs           : 3,534   (zero shared words: 298, 8.4%)
+  dropped, too similar     : 118
+  with a hard negative     : 2,227 (63.0%)  -> pada_pairs_hn.jsonl
+
+[val]
+  padas in pool            : 1,898
+  padas with a positive    : 306 (16.1%)
+  positive pairs           : 407   (zero shared words: 45, 11.1%)
+  dropped, too similar     : 16
+  with a hard negative     : 118 (29.0%)  -> pada_val_pairs_hn.jsonl
+
+==================================================================

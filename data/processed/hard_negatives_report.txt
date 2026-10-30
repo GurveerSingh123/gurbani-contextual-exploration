@@ -1,0 +1,13 @@
+==============================================================
+HARD NEGATIVES  (look alike, mean different things)
+==============================================================
+Rule    : lexical in [0.35, 0.9], meaning <= 0.1, and <= positive's agreement - 0.25
+Limit   : 1 negative(s) per pair, cross-Shabad, never a known positive
+
+pairs with a hard negative : 5,343 of 5,717 (93.5%)
+pairs left without one     : 374
+  ...rejected by margin    : 53
+
+negative lexical similarity : mean 0.534  max 0.895
+negative meaning similarity : mean 0.031
+==============================================================

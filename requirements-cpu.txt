@@ -1,0 +1,12 @@
+# CPU-only install (no NVIDIA GPU).
+#
+#   pip install -r requirements-cpu.txt
+#
+# The extra index serves CPU-only torch wheels (~200 MB instead of ~2.5 GB).
+# Enough to run build_index.py, evaluate.py and semantic_search.py.
+# NOT enough to fine-tune BGE-M3 -- use requirements-gpu.txt for that.
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+-r requirements.txt
+torch

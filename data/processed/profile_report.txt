@@ -1,0 +1,42 @@
+==============================================================
+GURBANI DATASET PROFILE
+==============================================================
+Source            : final_gurbani_dataset_all_steeks.xlsx
+Total rows        : 60,360
+Unique Pankatis   : 55,677
+
+-- exclusions ------------------------------------------------
+is_structural = 1       : 720
+prefix-rule headings    : 4,880
+lexicon-only headings   : 202
+rescued by guard        : 5
+excluded (total)        : 5,077
+TRAINABLE rows          : 55,217
+
+rows sharing text       : 5,235
+  ...still in corpus    : 792  (repeated scripture -> Step 2 must group)
+
+-- steek availability (all rows) -----------------------------
+steek_ss    :  55,018  [train]
+steek_bdb   :  55,034  [excluded from pairs]
+steek_ft    :  54,955  [train]
+steek_ms    :  60,067  [train]
+steek_pss   :  50,015  [excluded from pairs]
+
+ss & bdb both present   : 55,017
+  byte-identical        : 54,941 (99.9%)
+
+-- Steeks per TRAINABLE Pankati (ss / ft / ms) ---------------
+3 Steeks             :  54,763
+2 Steeks             :     253
+1 Steeks             :   5,245
+0 Steeks             :      99
+
+Estimated Pankati<->Steek positive pairs: 164,898
+
+-- metadata --------------------------------------------------
+ang         : 0 missing, 1,429 distinct
+shabad_id   : 0 missing, 5,540 distinct
+verse_id    : 0 missing, 60,360 distinct
+raag_id     : 644 missing, 31 distinct
+==============================================================

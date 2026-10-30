@@ -1,0 +1,27 @@
+==============================================================
+TRAINING PAIR CONSTRUCTION
+==============================================================
+Direction  : query = Steek, passage = Pankati
+Steeks used: steek_ss, steek_ft, steek_ms
+Negatives  : none (in-batch only; hard negatives mined in Step 4)
+
+Trainable rows      : 55,217
+Leakage groups      : 5,190
+  largest group     : 3,138 rows (5.68% of corpus)
+
+-- split (grouped by shabad_id + repeated Pankati text) ------
+train :  44,172 rows  131,806 pairs ( 80.0%)
+val   :   5,523 rows   16,457 pairs ( 10.0%)
+test  :   5,522 rows   16,515 pairs ( 10.0%)
+TOTAL :  55,217 rows  164,778 pairs
+
+-- pairs by Steek source -------------------------------------
+  ms  :  54,965
+  ss  :  54,954
+  ft  :  54,859
+
+dropped, steek < 15 chars : 27
+dropped, duplicate pair    : 93
+
+Retrieval corpus (unique Pankatis): 54,844
+==============================================================

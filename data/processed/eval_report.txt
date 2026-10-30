@@ -1,0 +1,20 @@
+==============================================================
+SEMANTIC EVALUATION SET  (Pankati -> Pankati)
+==============================================================
+Gold rule   : min(ss_sim, ms_sim) in [0.3, 0.97]
+Constraint  : cross-Shabad only; word overlap NOT filtered
+Query split : test
+
+Queries offered      : 5,502
+Queries with gold    : 827 (15.0%)
+Total gold pairs     : 1,758
+Gold per query       : mean 2.13  median 1  max 10
+
+-- how much of this is beyond keyword search ------------------
+gold pairs with ZERO shared words : 332 (18.9%)
+mean word overlap (Jaccard)       : 0.212
+
+-- spread across the Granth -----------------------------------
+Ang distance : mean 388  median 324  max 1381
+different Raag : 1,505 of 1,758 (85.6%)
+==============================================================

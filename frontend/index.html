@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gurbani Bhavarth Search</title>
+  <meta name="description" content="Find Pankatis of Sri Guru Granth Sahib Ji that carry the same Bhavarth, read in the context of their pada.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/ik-onkar.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts load when online; offline, Gurmukhi falls back to Windows' Nirmala UI. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Gurmukhi:wght@400;500;600&family=Noto+Serif+Gurmukhi:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body class="min-h-full">
+  <div class="backdrop-glow"></div>
+  <div class="grid-lines"></div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 border-b border-white/[.06] bg-night-950/70 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <a href="#" class="flex items-center gap-3">
+        <span class="ik-onkar-badge" aria-label="Ik Onkar">ੴ</span>
+        <div class="font-display text-base font-bold text-white">Bhavarth <span class="gradient-text">Search</span></div>
+      </a>
+      <nav class="hidden items-center gap-6 text-sm text-mist-400 md:flex">
+        <a href="#search" class="hover:text-white">Search</a>
+        <a href="#how" class="hover:text-white">How it works</a>
+        <a href="#about" class="hover:text-white">About</a>
+      </nav>
+      <div id="status" class="flex items-center gap-2 text-xs text-mist-400">
+        <span id="status-dot" class="h-2 w-2 rounded-full bg-mist-500"></span>
+        <span id="status-text">Connecting…</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="mx-auto max-w-6xl px-4 pb-8 pt-12 text-center sm:px-6 sm:pt-16">
+      <!-- Ik Onkar, first and above everything on the page -->
+      <div class="animate-rise"><span class="ik-onkar-hero" aria-label="Ik Onkar">ੴ</span></div>
+
+      <figure class="mx-auto mt-5 max-w-2xl animate-rise">
+        <blockquote class="font-gurbani text-xl leading-relaxed text-kesri-200 sm:text-2xl">
+          ਗੁਰਬਾਣੀ ਇਸੁ ਜਗ ਮਹਿ ਚਾਨਣੁ ਕਰਮਿ ਵਸੈ ਮਨਿ ਆਏ ॥
+        </blockquote>
+        <figcaption class="mt-2 text-sm text-mist-400">
+          The Guru's Bani is the light in this world; by His grace it comes to dwell in the mind.
+          <span class="ml-1 font-mono text-xs text-mist-500">Ang 67</span>
+        </figcaption>
+      </figure>
+
+      <div class="ornament mx-auto mt-8 animate-rise" aria-hidden="true"><span>☬</span></div>
+
+      <h1 class="mx-auto mt-6 max-w-4xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-white animate-rise sm:text-5xl lg:text-6xl">
+        Find the same <span class="gradient-text">Bhavarth</span> across<br class="hidden sm:block">
+        Sri Guru Granth Sahib Ji
+      </h1>
+      <p class="mx-auto mt-3 font-gurmukhi text-lg text-mist-300 animate-rise">ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ ਵਿੱਚ ਇਕੋ ਭਾਵਾਰਥ ਵਾਲੀਆਂ ਪੰਕਤੀਆਂ ਦੀ ਖੋਜ</p>
+      <p class="mx-auto mt-5 max-w-2xl text-base text-mist-300 animate-rise sm:text-lg">
+        Enter a Pankati. It is read together with its pada, and the search returns padas from other Shabads
+        that carry the same meaning, including ones that share no words with yours.
+        Or ask a question, in English or Punjabi, and receive the Gurbani that answers it.
+      </p>
+      <div class="pill mx-auto mt-6 animate-rise">
+        <span class="h-1.5 w-1.5 rounded-full bg-kesri-400 animate-breathe"></span>
+        Fine-tuned BGE-M3 · Pada-level context · Hybrid ranking · Explanations from the Steeks
+      </div>
+      <div class="mt-6 flex flex-wrap justify-center gap-2 animate-rise" id="stats">
+        <span class="pill"><b class="font-mono text-white" data-stat="padas">18,506</b> padas</span>
+        <span class="pill"><b class="font-mono text-white" data-stat="shabads">5,520</b> Shabads</span>
+        <span class="pill"><b class="font-mono text-white" data-stat="lines">54,844</b> Pankatis</span>
+        <span class="pill"><b class="font-mono text-white">1,430</b> Angs</span>
+        <span class="pill"><b class="font-mono text-white">31</b> Raags</span>
+      </div>
+    </section>
+
+    <!-- Search -->
+    <section id="search" class="mx-auto max-w-5xl scroll-mt-24 px-4 sm:px-6">
+      <form id="search-form" class="glass group p-5 sm:p-6">
+        <div class="glow-ring opacity-0 transition duration-500 group-focus-within:opacity-70"></div>
+
+        <!-- Two ways in: a line of Gurbani, or a question in English or Punjabi -->
+        <div class="mode-switch mb-4" role="tablist" aria-label="Search mode">
+          <button type="button" class="mode-btn mode-active" data-mode-btn="search" role="tab" aria-selected="true">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/></svg>
+            Search by Gurbani
+          </button>
+          <button type="button" class="mode-btn" data-mode-btn="ask" role="tab" aria-selected="false">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/></svg>
+            Ask a question
+          </button>
+        </div>
+
+        <!-- Search by Gurbani: its own box -->
+        <div data-mode="search">
+          <div class="mb-3 flex items-center justify-between text-xs text-mist-400">
+            <label for="q" class="flex items-center gap-2 font-medium">Pankati, several Pankatis, or a whole Shabad</label>
+            <span id="count" class="shrink-0 font-mono">0 / 4000</span>
+          </div>
+          <textarea id="q" rows="3" maxlength="4000"
+            class="w-full resize-y rounded-xl border border-white/10 bg-night-950/60 px-4 py-3 font-gurbani text-xl leading-relaxed text-white placeholder:text-mist-500 focus:border-kesri-500/60 focus:outline-none focus:ring-2 focus:ring-kesri-500/20"
+            placeholder="ਜਤ ਕਤ ਦੇਖਉ ਤਤ ਰਹਿਆ ਸਮਾਇ ॥"></textarea>
+          <!-- Each example fills in a whole pada (text from data/processed/padas.jsonl). -->
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <span class="text-xs text-mist-500">Try a pada:</span>
+            <button type="button" class="chip-example" data-example="ਏਕਸੁ ਸਿਉ ਜਾ ਕਾ ਮਨੁ ਰਾਤਾ ॥&#10;ਵਿਸਰੀ ਤਿਸੈ ਪਰਾਈ ਤਾਤਾ ॥੧॥">ਏਕਸੁ ਸਿਉ ਜਾ ਕਾ ਮਨੁ ਰਾਤਾ … <span class="font-mono text-[10px] text-mist-500">Ang 189</span></button>
+            <button type="button" class="chip-example" data-example="ਗੁਰਮੁਖਿ ਬੂਝੈ ਏਕ ਲਿਵ ਲਾਏ ॥&#10;ਨਿਜ ਘਰਿ ਵਾਸੈ ਸਾਚਿ ਸਮਾਏ ॥&#10;ਜੰਮਣੁ ਮਰਣਾ ਠਾਕਿ ਰਹਾਏ ॥&#10;ਪੂਰੇ ਗੁਰ ਤੇ ਇਹ ਮਤਿ ਪਾਏ ॥੭॥">ਗੁਰਮੁਖਿ ਬੂਝੈ ਏਕ ਲਿਵ ਲਾਏ … <span class="font-mono text-[10px] text-mist-500">Ang 222</span></button>
+            <button type="button" class="chip-example" data-example="ਹਰਿ ਧਨ ਮੇਰੀ ਚਿੰਤ ਵਿਸਾਰੀ ਹਰਿ ਧਨਿ ਲਾਹਿਆ ਧੋਖਾ ॥&#10;ਹਰਿ ਧਨ ਤੇ ਮੈ ਨਵ ਨਿਧਿ ਪਾਈ ਹਾਥਿ ਚਰਿਓ ਹਰਿ ਥੋਕਾ ॥੩॥">ਹਰਿ ਧਨ ਮੇਰੀ ਚਿੰਤ ਵਿਸਾਰੀ … <span class="font-mono text-[10px] text-mist-500">Ang 496</span></button>
+            <button type="button" class="chip-example" data-example="ਨਾਲਿ ਨਰਾਇਣੁ ਮੇਰੈ ॥&#10;ਜਮਦੂਤੁ ਨ ਆਵੈ ਨੇਰੈ ॥&#10;ਕੰਠਿ ਲਾਇ ਪ੍ਰਭ ਰਾਖੈ ॥&#10;ਸਤਿਗੁਰ ਕੀ ਸਚੁ ਸਾਖੈ ॥੧॥">ਨਾਲਿ ਨਰਾਇਣੁ ਮੇਰੈ … <span class="font-mono text-[10px] text-mist-500">Ang 630</span></button>
+          </div>
+        </div>
+
+        <!-- Ask a question: a separate box, kept apart from the Gurbani search -->
+        <div data-mode="ask" hidden>
+          <div class="mb-3 flex items-center justify-between text-xs text-mist-400">
+            <label for="ask-q" class="flex items-center gap-2 font-medium">Your question, in English or Punjabi</label>
+            <span id="ask-count" class="shrink-0 font-mono">0 / 300</span>
+          </div>
+          <textarea id="ask-q" rows="2" maxlength="300"
+            class="w-full resize-y rounded-xl border border-teal-400/20 bg-night-950/60 px-4 py-3 text-lg leading-relaxed text-white placeholder:text-mist-500 focus:border-teal-400/60 focus:outline-none focus:ring-2 focus:ring-teal-400/20"
+            placeholder="How can I remove my ego?   ·   ਮਨ ਨੂੰ ਸ਼ਾਂਤੀ ਕਿਵੇਂ ਮਿਲੇ?"></textarea>
+          <p class="mt-2 text-xs text-mist-500">The answer comes from Sri Guru Granth Sahib Ji: one or two padas, explained in Punjabi and English.</p>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <span class="text-xs text-mist-500">Try asking:</span>
+            <button type="button" class="chip-example" data-example="How can I remove my ego?">How can I remove my ego?</button>
+            <button type="button" class="chip-example" data-example="How should I meditate on Naam?">How should I meditate on Naam?</button>
+            <button type="button" class="chip-example font-gurmukhi" data-example="ਗੁੱਸਾ ਕਿਵੇਂ ਘਟਾਈਏ?">ਗੁੱਸਾ ਕਿਵੇਂ ਘਟਾਈਏ?</button>
+            <button type="button" class="chip-example" data-example="Why should I not fear death?">Why should I not fear death?</button>
+            <button type="button" class="chip-example font-gurmukhi" data-example="ਮਨ ਨੂੰ ਸ਼ਾਂਤੀ ਕਿਵੇਂ ਮਿਲੇ?">ਮਨ ਨੂੰ ਸ਼ਾਂਤੀ ਕਿਵੇਂ ਮਿਲੇ?</button>
+          </div>
+        </div>
+
+        <!-- How many results each section shows -->
+        <div class="mt-4 flex flex-wrap items-center gap-3" data-mode="search">
+          <span class="text-xs text-mist-500">Show top</span>
+          <div class="inline-flex rounded-xl border border-white/10 bg-night-950/50 p-1" role="radiogroup" aria-label="Number of results">
+            <button type="button" class="topn-btn" data-topn="3" role="radio" aria-checked="false">3</button>
+            <button type="button" class="topn-btn topn-active" data-topn="5" role="radio" aria-checked="true">5</button>
+            <button type="button" class="topn-btn" data-topn="10" role="radio" aria-checked="false">10</button>
+          </div>
+          <span class="text-xs text-mist-500">in each section</span>
+        </div>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
+          <button type="submit" id="go" class="btn-primary w-full text-base">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span id="go-label">Search by meaning</span>
+          </button>
+          <button type="button" id="clear" class="btn-ghost">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            Clear
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Results -->
+    <section id="results" class="mx-auto max-w-5xl px-4 pt-10 sm:px-6" aria-live="polite"></section>
+
+    <!-- How it works -->
+    <section id="how" class="mx-auto max-w-6xl scroll-mt-24 px-4 pt-20 sm:px-6">
+      <h2 class="section-title text-center">How it works</h2>
+      <p class="section-gurmukhi text-center">ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ</p>
+      <p class="section-sub mx-auto text-center">There are no ready-made labels saying which verses mean the same. The system learned it from the commentators.</p>
+      <div class="mt-8 grid gap-5 md:grid-cols-3">
+        <article class="glass glass-hover p-6">
+          <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-kesri-500/15 text-kesri-300 shadow-glow-kesri">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-white">Read in context</h3>
+          <p class="mt-2 text-sm leading-relaxed text-mist-400">A single line is often half a thought. Each Pankati is read with its pada, the lines up to its ॥n॥ marker, so the meaning comes from the whole idea.</p>
+        </article>
+        <article class="glass glass-hover p-6">
+          <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-violet-500/15 text-violet-300" style="box-shadow:0 0 0 1px rgba(139,92,246,.35),0 0 32px -6px rgba(139,92,246,.45)">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="m8.6 10.6 6.8-3.2M8.6 13.4l6.8 3.2"/></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-white">Meaning + words</h3>
+          <p class="mt-2 text-sm leading-relaxed text-mist-400">A BGE-M3 model, fine-tuned on padas that two independent Steeks explain alike, is combined with keyword search. Matches with no shared words get their own section.</p>
+        </article>
+        <article class="glass glass-hover glass-teal p-6">
+          <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-500/15 text-teal-300 shadow-glow-teal">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-white">Explained from the Steeks</h3>
+          <p class="mt-2 text-sm leading-relaxed text-mist-400">Every result carries a one-line reason drawn from the Steeks. "Why this match?" goes further: it compares the two padas using only their Steeks and says plainly whether they are the same, related, or different.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="mx-auto max-w-6xl scroll-mt-24 px-4 pb-16 pt-20 sm:px-6">
+      <div class="glass grid gap-6 p-6 sm:p-8 md:grid-cols-[1.3fr_1fr]">
+        <div>
+          <h2 class="section-title">Semantic Retrieval and Contextual Exploration System</h2>
+          <p class="section-gurmukhi">ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ ਲਈ ਅਰਥ-ਅਧਾਰਿਤ ਖੋਜ ਪ੍ਰਣਾਲੀ</p>
+          <p class="mt-3 text-sm leading-relaxed text-mist-400">A B.Tech major project for Sri Guru Granth Sahib Ji. Pankatis that teach the same thing are often written in completely different words, and keyword search cannot connect them. This system learns meaning from three published Steeks (listed at the bottom of the page).</p>
+          <figure class="mt-5 border-l-0 rounded-xl bg-night-950/40 p-4">
+            <blockquote class="font-gurbani text-lg text-kesri-200">ਬਾਣੀ ਬਿਰਲਉ ਬੀਚਾਰਸੀ ਜੇ ਕੋ ਗੁਰਮੁਖਿ ਹੋਇ ॥</blockquote>
+            <figcaption class="mt-1 text-xs text-mist-500">Rare is the one who reflects on the Bani, the one who becomes Gurmukh. <span class="font-mono">Ang 935</span></figcaption>
+          </figure>
+        </div>
+        <dl class="grid grid-cols-2 gap-4 text-sm">
+          <div><dt class="text-mist-500">Team</dt><dd class="mt-1 text-mist-200">Balkaran Singh<br>Gurpreet Kaur<br>Gurveer Singh</dd></div>
+          <div><dt class="text-mist-500">Guide</dt><dd class="mt-1 text-mist-200">Dr. Parminder Singh</dd></div>
+          <div class="col-span-2"><dt class="text-mist-500">Institution</dt><dd class="mt-1 text-mist-200">Department of CSE, Guru Nanak Dev Engineering College, Ludhiana</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/[.06] px-4 py-8 text-center">
+    <p class="font-gurmukhi text-base text-kesri-200">ਵਾਹਿਗੁਰੂ ਜੀ ਕਾ ਖ਼ਾਲਸਾ, ਵਾਹਿਗੁਰੂ ਜੀ ਕੀ ਫ਼ਤਿਹ</p>
+    <dl class="mx-auto mt-5 flex max-w-3xl flex-wrap justify-center gap-x-6 gap-y-2 text-xs">
+      <div><dt class="inline font-semibold text-kesri-300">Steek 1</dt> <dd class="inline text-mist-400">Prof. Sahib Singh, <i>Sri Guru Granth Sahib Darpan</i></dd></div>
+      <div><dt class="inline font-semibold text-kesri-300">Steek 2</dt> <dd class="inline text-mist-400">Manmohan Singh</dd></div>
+      <div><dt class="inline font-semibold text-kesri-300">Steek 3</dt> <dd class="inline text-mist-400">Faridkot Teeka (in Braj)</dd></div>
+    </dl>
+    <p class="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-mist-500">
+      The Steeks are shown as published. This is a study aid: for understanding, read the Bani itself and the full Steeks.
+    </p>
+    <p class="mt-2 text-xs text-mist-500"><span id="footer-explain">Explanations: checking…</span></p>
+  </footer>
+
+  <script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>

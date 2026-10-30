@@ -1,0 +1,20 @@
+==============================================================
+PADAS  (lines up to a ॥n॥ marker or a Rahao line)
+==============================================================
+Lines left out     : 66 (no Steek and no split: Raagmala, heading fragments)
+Shabads            : 5,520
+Padas              : 18,506
+Lines per pada     : 1: 637, 2: 10,083, 3: 2,862, 4: 2,685, 5: 614, 6: 925, 7: 81, 8: 290 ...
+Mean lines / pada  : 2.98
+Identical text elsewhere : 22 padas
+
+Split (Shabad-grouped, so every pada is in one part):
+  test  : 1,854
+  train : 14,754
+  val   : 1,898
+
+Padas with each Steek present:
+  steek_ss : 18,480 (99.9%)
+  steek_ms : 18,504 (100.0%)
+  steek_ft : 18,501 (100.0%)
+==============================================================

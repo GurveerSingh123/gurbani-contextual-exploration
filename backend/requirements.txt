@@ -1,0 +1,12 @@
+# Backend (API server) only. Install into the project's .venv, after torch:
+#   pip install -r requirements-cpu.txt      (installs torch + the pipeline libraries)
+#   pip install -r backend/requirements.txt
+fastapi
+uvicorn[standard]
+python-dotenv
+numpy
+pandas
+rank_bm25
+sentence-transformers   # only used for free-text queries (loads the pada model)
+peft                    # the pada model is a LoRA adapter on BGE-M3
+openai                  # "Why this match?" -- any OpenAI-compatible free API (Groq by default)

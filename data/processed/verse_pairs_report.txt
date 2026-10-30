@@ -1,0 +1,15 @@
+==============================================================
+PANKATI <-> PANKATI TRAINING PAIRS
+==============================================================
+Source split   : train only (no leakage into val/test)
+Rule           : min(ss_sim, ms_sim) in [0.3, 0.97]
+Constraints    : cross-Shabad, max 3/verse, word overlap <= 0.6
+
+pairs written          : 5,717
+distinct anchor verses : 3,737 of 43,821 (8.5%)
+dropped, too similar   : 780
+
+commentator agreement  : mean 0.357  median 0.338
+word overlap           : mean 0.183
+  pairs with ZERO shared words : 1,090 (19.1%)
+==============================================================

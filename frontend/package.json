@@ -1,0 +1,13 @@
+{
+  "name": "gurbani-bhavarth-search-frontend",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Frontend for Gurbani Bhavarth Search. Static HTML + Tailwind CSS + vanilla JS; served by the backend.",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./assets/css/app.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./assets/css/app.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}
